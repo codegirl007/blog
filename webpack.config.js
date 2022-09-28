@@ -38,4 +38,9 @@ module.exports = {
 		}),
 		new MiniCssExtractPlugin(),
 	],
+	devServer: {
+		historyApiFallback: true,
+		hot: true,
+		open: true,
+	},
 };

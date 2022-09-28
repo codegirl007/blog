@@ -6,7 +6,7 @@ const Styled = {
 	MainLogo: styled("img")({
 		width: "3.2rem",
 		height: "auto",
-		margin: "1.6rem 0.9rem 1.6rem 1.7rem",
+		margin: "auto 3.2rem auto 1.7rem",
 	}),
 };
 
