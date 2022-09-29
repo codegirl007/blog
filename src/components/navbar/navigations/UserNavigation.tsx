@@ -1,13 +1,10 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { CustomNavlinkButton } from "../CustomNavlinkButton";
+import { Styled } from "./MainNavigation";
 
 export const UserNavigation = (): JSX.Element => {
 	return (
 		<>
-			<NavLink to="/login">
-				<CustomNavlinkButton>Login</CustomNavlinkButton>
-			</NavLink>
+			<Styled.NavLink to="/login">Login</Styled.NavLink>
 		</>
 	);
 };

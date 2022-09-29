@@ -1,7 +1,8 @@
 import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { themeColors } from "./themeColors";
 
 export const typography: TypographyOptions = {
-	fontFamily: "Inter, sans-serif",
+	fontFamily: "Helvetica",
 	htmlFontSize: 10,
 	fontWeightRegular: 400,
 	h1: {
@@ -18,6 +19,8 @@ export const typography: TypographyOptions = {
 		fontSize: "2.8rem",
 		fontWeight: 500,
 		lineHeight: "3.2rem",
+		marginBottom: "2.4rem",
+		color: themeColors.basic.black,
 	},
 	h4: {
 		fontSize: "2.4rem",
