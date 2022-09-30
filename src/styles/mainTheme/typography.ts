@@ -9,6 +9,7 @@ export const typography: TypographyOptions = {
 		fontSize: "4rem",
 		fontWeight: 500,
 		lineHeight: "4.8rem",
+		marginRight: "3.2rem",
 	},
 	h2: {
 		fontSize: "3.2rem",
@@ -26,6 +27,11 @@ export const typography: TypographyOptions = {
 		fontSize: "2.4rem",
 		fontWeight: 500,
 		lineHeight: "2.8 rem",
+	},
+	h5: {
+		fontSize: "1.4rem",
+		fontWeight: 500,
+		lineHeight: "2.4rem",
 	},
 	body1: {
 		fontSize: "1.4rem",

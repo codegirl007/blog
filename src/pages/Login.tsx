@@ -26,7 +26,7 @@ export const Login = (): JSX.Element => {
 		mode: "onChange",
 	});
 
-	const onSubmit = (formData: LoginType) => {
+	const onSubmit = (formData: LoginType): void => {
 		mutate({
 			username: formData.username,
 			password: formData.password,

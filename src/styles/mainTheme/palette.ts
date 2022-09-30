@@ -4,6 +4,9 @@ export const palette: PaletteOptions = {
 	primary: {
 		main: "#007BFF",
 	},
+	secondary: {
+		main: "#6C757D",
+	},
 	error: {
 		main: "#DC3545",
 	},

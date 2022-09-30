@@ -17,6 +17,7 @@ const useStore = create(
 
 export const authStore = {
 	addToken: (newToken: string) => useStore.setState({ token: newToken }),
-	setAuthorized: () => useStore.setState({ authorized: true }),
+	logInUser: () => useStore.setState({ authorized: true }),
+	logOutUser: () => useStore.setState({ authorized: false }),
 	useStore,
 };
