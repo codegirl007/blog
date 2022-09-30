@@ -3,6 +3,9 @@ import { styled } from "@mui/material/styles";
 import { TextField, Typography, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Spacer } from "../styles/customComponents.tsx/Spacer";
+import { LoginType } from "../types/LoginType";
+import { useMutation } from "react-query";
+import { ApiRequests } from "../actions/fetchActions";
 
 const Styled = {
 	LoginPageContainer: styled("div")({
@@ -13,22 +16,21 @@ const Styled = {
 	}),
 };
 
-type FormValues = {
-	username: string;
-	password: string;
-};
-
 export const Login = (): JSX.Element => {
+	const { mutate } = useMutation(ApiRequests.authorize);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<FormValues>({
+	} = useForm<LoginType>({
 		mode: "onChange",
 	});
 
-	const onSubmit = () => {
-		undefined;
+	const onSubmit = (formData: LoginType) => {
+		mutate({
+			username: formData.username,
+			password: formData.password,
+		});
 	};
 	return (
 		<Styled.LoginPageContainer>
@@ -64,10 +66,13 @@ export const Login = (): JSX.Element => {
 					error={Boolean(errors.password)}
 					helperText={errors.password?.message}
 					id="password"
+					sx={{ marginBottom: "2rem" }}
 				/>
 				<div style={{ display: "flex" }}>
 					<Spacer />
-					<Button variant="contained">Log In</Button>
+					<Button variant="contained" type="submit">
+						Log In
+					</Button>
 				</div>
 			</form>
 		</Styled.LoginPageContainer>

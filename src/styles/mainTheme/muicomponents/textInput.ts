@@ -47,7 +47,7 @@ export const textInput: ThemeOptions["components"] = {
 		styleOverrides: {
 			root: {
 				width: "100%",
-				maxWidth: "28rem",
+
 				borderRadius: "0.4rem",
 				height: "3.6rem",
 				".MuiSelect-select": {
