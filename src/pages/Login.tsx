@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Spacer } from "../styles/customComponents.tsx/Spacer";
 import { LoginType } from "../types/LoginType";
 import { useMutation } from "react-query";
-import { ApiRequests } from "../actions/fetchActions";
+import { ApiRequests } from "../utils/ApiRequestsClass";
 
 const Styled = {
 	LoginPageContainer: styled("div")({
@@ -45,10 +45,6 @@ export const Login = (): JSX.Element => {
 					placeholder="me@example.com"
 					{...register("username", {
 						required: "Email is required",
-						pattern: {
-							value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-							message: "Please, write correct email format",
-						},
 					})}
 					error={Boolean(errors.username)}
 					helperText={errors.username?.message}

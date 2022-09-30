@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
+const dotenv = require("dotenv");
 
 module.exports = {
 	mode: "development",
@@ -37,6 +39,9 @@ module.exports = {
 			template: "index.html",
 		}),
 		new MiniCssExtractPlugin(),
+		new webpack.DefinePlugin({
+			"process.env": JSON.stringify(dotenv.config().parsed),
+		}),
 	],
 	devServer: {
 		historyApiFallback: true,

@@ -1,5 +1,6 @@
+import { authStore } from "../stores/authStore";
 import { LoginType } from "../types/LoginType";
-import { axiosInstance } from "../utils/axiosInstance";
+import { axiosInstance } from "./axiosInstance";
 
 export class ApiRequests {
 	static getArticles = async (): Promise<void> => {
@@ -16,6 +17,7 @@ export class ApiRequests {
 			url: "login",
 			data: loginData,
 		});
-		return data;
+		authStore.addToken(data.access_token);
+		authStore.setAuthorized();
 	};
 }
