@@ -1,6 +1,7 @@
 import { createTheme } from "@mui/material";
 import { baseline } from "./muiComponents/baseline";
 import { button } from "./muiComponents/button";
+import { table } from "./muiComponents/table";
 import { textInput } from "./muiComponents/textInput";
 import { palette } from "./palette";
 import { typography } from "./typography";
@@ -13,5 +14,6 @@ export const mainTheme = createTheme({
 		...baseline,
 		...textInput,
 		...button,
+		...table,
 	},
 });

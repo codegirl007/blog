@@ -11,6 +11,8 @@ import { RecentArticles } from "../pages/RecentArticles";
 const Styled = {
 	RoutesContainer: styled("div")({
 		width: "100%",
+		height: "100vh",
+		overflowY: "scroll",
 		padding: "12rem 22.5rem",
 	}),
 };

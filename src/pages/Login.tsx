@@ -6,6 +6,7 @@ import { Spacer } from "../styles/customComponents.tsx/Spacer";
 import { LoginType } from "../types/LoginType";
 import { useMutation } from "react-query";
 import { ApiRequests } from "../utils/ApiRequestsClass";
+import { useNavigate } from "react-router-dom";
 
 const Styled = {
 	LoginPageContainer: styled("div")({
@@ -18,6 +19,7 @@ const Styled = {
 
 export const Login = (): JSX.Element => {
 	const { mutate } = useMutation(ApiRequests.authorize);
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -31,6 +33,7 @@ export const Login = (): JSX.Element => {
 			username: formData.username,
 			password: formData.password,
 		});
+		navigate("/myArticles");
 	};
 	return (
 		<Styled.LoginPageContainer>

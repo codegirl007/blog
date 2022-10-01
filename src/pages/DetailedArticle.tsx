@@ -25,7 +25,9 @@ export const Styled = {
 		backgroundColor: "yellow",
 	}),
 	Typography: styled(Typography)({
-		textTransform: "capitalize",
+		"&:first-letter": {
+			textTransform: "uppercase",
+		},
 	}),
 	AsideContainer: styled("div")({
 		width: "37.1rem",
@@ -73,7 +75,7 @@ export const DetailedArticle = (): JSX.Element => {
 			<Styled.AsideContainer>
 				<Typography variant="h4">Related Articles</Typography>
 				{articlesData?.items.map((article) => (
-					<RelatedArticle key={article.articleId} title={article.title} perex={article.perex} />
+					<RelatedArticle key={article.articleId} title={article.title} perex={article.perex} articleId={article.articleId} />
 				))}
 			</Styled.AsideContainer>
 		</HBox>

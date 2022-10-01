@@ -34,7 +34,9 @@ export const Styled = {
 		whiteSpace: "normal",
 	}),
 	Typography: styled(Typography)({
-		textTransform: "capitalize",
+		"&:first-letter": {
+			textTransform: "uppercase",
+		},
 	}),
 	NavLink: styled(NavLink)({
 		textDecoration: "none",
