@@ -31,14 +31,16 @@ type Props = {
 export const MyArticlesTableRow = (props: Props): JSX.Element => {
 	const { article } = props;
 	const userName = authStore.useStore((state) => state.userName, shallow);
-	const { mutate } = useMutation("deleteArticle", (id: string) => ApiRequests.deleteArticle(id));
 	const queryClient = useQueryClient();
+	const { mutate } = useMutation("deleteArticle", (id: string) => ApiRequests.deleteArticle(id), {
+		onSuccess: () => {
+			queryClient.invalidateQueries("articles");
+		},
+	});
 
 	const deleteArticle = () => {
 		if (article.articleId) {
 			mutate(article.articleId);
-			queryClient.refetchQueries(["articles"]);
-			queryClient.invalidateQueries();
 		}
 	};
 
