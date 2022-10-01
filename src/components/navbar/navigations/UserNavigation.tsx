@@ -1,7 +1,7 @@
 import React from "react";
 import { authStore } from "../../../stores/authStore";
-import { Styled } from "./MainNavigation";
 import shallow from "zustand/shallow";
+import { CustomNavLink } from "../../../styles/customComponents.tsx/CustomNavLink";
 
 export const UserNavigation = (): JSX.Element => {
 	const authorized = authStore.useStore((state) => state.authorized, shallow);
@@ -13,14 +13,14 @@ export const UserNavigation = (): JSX.Element => {
 		<>
 			{authorized ? (
 				<div style={{ display: "flex" }}>
-					<Styled.NavLink to="/myArticles">My Articles</Styled.NavLink>
-					<Styled.NavLink to="/createArticle">Create Article</Styled.NavLink>
-					<Styled.NavLink to="/" onClick={logoutUser}>
+					<CustomNavLink to="/myArticles">My Articles</CustomNavLink>
+					<CustomNavLink to="/createArticle">Create Article</CustomNavLink>
+					<CustomNavLink to="/" onClick={logoutUser}>
 						Logout
-					</Styled.NavLink>
+					</CustomNavLink>
 				</div>
 			) : (
-				<Styled.NavLink to="/login">Login</Styled.NavLink>
+				<CustomNavLink to="/login">Login</CustomNavLink>
 			)}
 		</>
 	);

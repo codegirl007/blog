@@ -3,9 +3,9 @@ import React from "react";
 import { useQuery } from "react-query";
 import { ApiRequests } from "../utils/ApiRequestsClass";
 import { styled } from "@mui/material/styles";
-import { Article } from "../components/article/Article";
 import _ from "lodash";
 import { ArticleListResponseType } from "../types/ArticleListResponseType";
+import { ArticleListItem } from "../components/recentArticlesList/ArticleListItem";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({
@@ -33,7 +33,7 @@ export const RecentArticles = (): JSX.Element => {
 			</Typography>
 			<Styled.ArticlesContainer>
 				{sortedArticles.map((article) => (
-					<Article article={article} />
+					<ArticleListItem key={article.articleId} article={article} />
 				))}
 			</Styled.ArticlesContainer>
 		</>

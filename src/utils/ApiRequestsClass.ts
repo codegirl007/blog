@@ -12,6 +12,14 @@ export class ApiRequests {
 		return response.data;
 	};
 
+	static getDetailedArticle = async (id: string | undefined) => {
+		const response = await axiosInstance({
+			method: "GET",
+			url: `articles/${id}`,
+		});
+		return response.data;
+	};
+
 	static authorize = async (loginData: LoginType) => {
 		const { data } = await axiosInstance({
 			method: "POST",
@@ -20,6 +28,7 @@ export class ApiRequests {
 		});
 		authStore.addToken(data.access_token);
 		authStore.logInUser();
+		authStore.addUserName(loginData.username);
 	};
 	static createNewArticle = async (newArticleData: NewArticleType) => {
 		const response = await axiosInstance({

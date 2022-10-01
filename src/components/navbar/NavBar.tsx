@@ -12,6 +12,7 @@ const Styled = {
 		display: "flex",
 		padding: "0 22.5rem",
 		justifyContent: "space-between",
+		zIndex: 9999,
 	}),
 };
 

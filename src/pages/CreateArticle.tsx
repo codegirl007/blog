@@ -9,15 +9,11 @@ import { NewArticleType } from "../types/NewArticleType";
 import { styled } from "@mui/material/styles";
 import { MarkDownEditor } from "../components/markdown/MarkDownEditor";
 import { v4 as uuid } from "uuid";
+import { HBox } from "../styles/customComponents.tsx/HBox";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({
 		width: "76rem",
-	}),
-	HeadingContainer: styled("div")({
-		display: "flex",
-		alignItems: "center",
-		marginBottom: "4rem",
 	}),
 };
 
@@ -49,12 +45,12 @@ export const CreateArticle = (): JSX.Element => {
 	return (
 		<Styled.ArticlesContainer>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Styled.HeadingContainer>
+				<HBox sx={{ marginBottom: "4rem" }}>
 					<Typography variant="h1">Create new article</Typography>
 					<Button variant="contained" type="submit">
 						Publish Article
 					</Button>
-				</Styled.HeadingContainer>
+				</HBox>
 				<TextField
 					label="Article Title"
 					variant="outlined"

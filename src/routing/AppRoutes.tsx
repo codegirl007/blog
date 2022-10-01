@@ -1,6 +1,7 @@
 import { styled } from "@mui/styles";
 import React from "react";
 import { Route, Routes } from "react-router";
+import { About } from "../pages/About";
 import { CreateArticle } from "../pages/CreateArticle";
 import { DetailedArticle } from "../pages/DetailedArticle";
 import { Login } from "../pages/Login";
@@ -19,7 +20,8 @@ export const AppRoutes = (): JSX.Element => {
 		<Styled.RoutesContainer>
 			<Routes>
 				<Route path="/" element={<RecentArticles />} />
-				<Route path="/articles/:articleId" element={<DetailedArticle />} />
+				<Route path="/about" element={<About />} />
+				<Route path="/:articleId" element={<DetailedArticle />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/createArticle" element={<CreateArticle />} />
 				<Route path="/myArticles" element={<MyArticles />} />
