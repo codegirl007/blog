@@ -7,24 +7,35 @@ import { MyArticlesTableRow } from "./MyArticlesTableRow";
 import TableBody from "@mui/material/TableBody";
 
 export const MyArticlesTable = (): JSX.Element => {
-	const { data } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles);
+	const { data, isFetching } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles, {
+		refetchOnWindowFocus: true,
+		staleTime: 0,
+		cacheTime: 0,
+		refetchInterval: 0,
+	});
+
+	if (isFetching) {
+		return <div>Loading...</div>;
+	}
 
 	return (
-		<Table>
-			<TableHead>
-				<TableRow>
-					<TableCell>Article title</TableCell>
-					<TableCell>Perex</TableCell>
-					<TableCell>Author</TableCell>
-					<TableCell># of comments</TableCell>
-					<TableCell>Actions</TableCell>
-				</TableRow>
-			</TableHead>
-			<TableBody>
-				{data?.items.map((article) => (
-					<MyArticlesTableRow key={article.articleId} article={article} />
-				))}
-			</TableBody>
-		</Table>
+		<>
+			<Table>
+				<TableHead>
+					<TableRow>
+						<TableCell>Article title</TableCell>
+						<TableCell>Perex</TableCell>
+						<TableCell>Author</TableCell>
+						<TableCell># of comments</TableCell>
+						<TableCell>Actions</TableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{data?.items.map((article) => (
+						<MyArticlesTableRow key={article.articleId} article={article} />
+					))}
+				</TableBody>
+			</Table>
+		</>
 	);
 };

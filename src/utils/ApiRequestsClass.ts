@@ -20,6 +20,23 @@ export class ApiRequests {
 		return response.data;
 	};
 
+	static createNewArticle = async (newArticleData: NewArticleType) => {
+		const response = await axiosInstance({
+			method: "POST",
+			url: "articles",
+			data: newArticleData,
+		});
+		return response.data;
+	};
+
+	static deleteArticle = async (id: string) => {
+		const response = await axiosInstance({
+			method: "DELETE",
+			url: `articles/${id}`,
+		});
+		return response;
+	};
+
 	static authorize = async (loginData: LoginType) => {
 		const { data } = await axiosInstance({
 			method: "POST",
@@ -29,13 +46,5 @@ export class ApiRequests {
 		authStore.addToken(data.access_token);
 		authStore.logInUser();
 		authStore.addUserName(loginData.username);
-	};
-	static createNewArticle = async (newArticleData: NewArticleType) => {
-		const response = await axiosInstance({
-			method: "POST",
-			url: "articles",
-			data: newArticleData,
-		});
-		return response.data;
 	};
 }

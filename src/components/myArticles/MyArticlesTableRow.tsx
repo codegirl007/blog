@@ -10,6 +10,8 @@ import { RemoveIcon } from "../../styles/icons/RemoveIcon";
 import { IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/styles";
+import { useMutation, useQueryClient } from "react-query";
+import { ApiRequests } from "../../utils/ApiRequestsClass";
 
 const Styled = {
 	Typography: styled(Typography)({
@@ -29,6 +31,17 @@ type Props = {
 export const MyArticlesTableRow = (props: Props): JSX.Element => {
 	const { article } = props;
 	const userName = authStore.useStore((state) => state.userName, shallow);
+	const { mutate } = useMutation("deleteArticle", (id: string) => ApiRequests.deleteArticle(id));
+	const queryClient = useQueryClient();
+
+	const deleteArticle = () => {
+		if (article.articleId) {
+			mutate(article.articleId);
+			queryClient.refetchQueries(["articles"]);
+			queryClient.invalidateQueries();
+		}
+	};
+
 	return (
 		<TableRow>
 			<TableCell sx={{ maxWidth: "40rem" }}>
@@ -48,7 +61,7 @@ export const MyArticlesTableRow = (props: Props): JSX.Element => {
 					<IconButton>
 						<EditIcon />
 					</IconButton>
-					<IconButton>
+					<IconButton onClick={deleteArticle}>
 						<RemoveIcon />
 					</IconButton>
 				</HBox>

@@ -18,7 +18,7 @@ export const Styled = {
 };
 
 export const CreateArticle = (): JSX.Element => {
-	const { mutate } = useMutation(ApiRequests.createNewArticle);
+	const { mutate } = useMutation("createArticle", ApiRequests.createNewArticle);
 	const [markdownVal, setMarkdownVal] = useState("");
 	const {
 		register,
