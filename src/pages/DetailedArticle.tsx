@@ -10,6 +10,7 @@ import { HBox } from "../styles/customComponents.tsx/HBox";
 import { themeColors } from "../styles/mainTheme/themeColors";
 import { ArticleListResponseType } from "../types/ArticleListResponseType";
 import { RelatedArticle } from "../components/relatedArticle/RelatedArticle";
+import { ArticleImage } from "../components/articleImage/ArticleImage";
 
 export const Styled = {
 	DetailedArticleContainer: styled("div")({
@@ -20,9 +21,9 @@ export const Styled = {
 		margin: "2.4rem 0",
 	}),
 	DetailedArticleImage: styled("div")({
+		objectFit: "cover",
 		width: "100%",
 		height: "50.4rem",
-		backgroundColor: "yellow",
 	}),
 	Typography: styled(Typography)({
 		"&:first-letter": {
@@ -47,9 +48,11 @@ export const Styled = {
 
 export const DetailedArticle = (): JSX.Element => {
 	const { articleId } = useParams<string>();
-	const { data, error, isLoading } = useQuery<DetailedArticleResponseType, Error>("detailedArticle", () =>
-		ApiRequests.getDetailedArticle(articleId)
-	);
+	const {
+		data: detailedArticleData,
+		error,
+		isLoading,
+	} = useQuery<DetailedArticleResponseType, Error>("detailedArticle", () => ApiRequests.getDetailedArticle(articleId));
 	const { data: articlesData } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles);
 
 	if (isLoading) {
@@ -64,11 +67,13 @@ export const DetailedArticle = (): JSX.Element => {
 		<HBox sx={{ alignItems: "start", justifyContent: "space-between" }}>
 			<Styled.DetailedArticleContainer>
 				<>
-					<Styled.Typography variant="h1">{data?.title}</Styled.Typography>
-					{data && <Styled.ArticleCreationInfo article={data} />}
-					<Styled.DetailedArticleImage></Styled.DetailedArticleImage>
+					<Styled.Typography variant="h1">{detailedArticleData?.title}</Styled.Typography>
+					{detailedArticleData && <Styled.ArticleCreationInfo article={detailedArticleData} />}
+					<Styled.DetailedArticleImage>
+						{detailedArticleData?.imageId && <ArticleImage imageId={detailedArticleData?.imageId} />}
+					</Styled.DetailedArticleImage>
 					<Typography variant="body1" sx={{ margin: "2.4rem 0" }}>
-						{data?.content}
+						{detailedArticleData?.content}
 					</Typography>
 				</>
 			</Styled.DetailedArticleContainer>

@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import { ArticleListItemImage } from "./ArticleListItemImage";
+import { ArticleImage } from "../articleImage/ArticleImage";
 import { styled } from "@mui/material/styles";
 import { themeColors } from "../../styles/mainTheme/themeColors";
 import { ArticleType } from "../../types/ArticleType";
@@ -43,6 +43,12 @@ export const Styled = {
 		color: themeColors.primary.primaryBlue,
 		fontSize: "1.4rem",
 	}),
+	ImageContainer: styled("div")({
+		minWidth: "27.2rem",
+		width: "27.2rem",
+		height: "24.4rem",
+		objectFit: "cover",
+	}),
 };
 
 type Props = {
@@ -54,7 +60,9 @@ export const ArticleListItem = (props: Props): JSX.Element => {
 
 	return (
 		<Styled.ArticleWrapper>
-			<ArticleListItemImage />
+			<Styled.ImageContainer>
+				<ArticleImage imageId={article.imageId} />
+			</Styled.ImageContainer>
 			<Styled.ContentContainer>
 				<Styled.Typography variant="h4">{article.title}</Styled.Typography>
 				<ArticleCreationInfo article={article} />

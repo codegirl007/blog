@@ -8,7 +8,6 @@ const token = authStore.useStore.getState().token ?? "";
 export const axiosInstance = axios.create({
 	baseURL: `${ServerConstants.SERVER_ENDPOINT}`,
 	headers: {
-		"Content-Type": "application/json",
 		"X-API-KEY": apiKey,
 		Authorization: token,
 	},

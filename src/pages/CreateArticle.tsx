@@ -18,8 +18,10 @@ export const Styled = {
 };
 
 export const CreateArticle = (): JSX.Element => {
-	const { mutate } = useMutation("createArticle", ApiRequests.createNewArticle);
 	const [markdownVal, setMarkdownVal] = useState("");
+	const { mutate: createArticleMutate } = useMutation("createArticle", ApiRequests.createNewArticle);
+	const { data: imageIdData, mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage);
+
 	const {
 		register,
 		handleSubmit,
@@ -31,15 +33,23 @@ export const CreateArticle = (): JSX.Element => {
 
 	const onSubmit = (formData: NewArticleType): void => {
 		const uniqueId = uuid();
-		mutate({
+		createArticleMutate({
 			articleId: uniqueId,
 			title: formData.title,
 			perex: markdownVal.substring(0, 500),
-			imageId: uniqueId,
+			imageId: imageIdData[0].imageId,
 			content: markdownVal,
 		});
 		reset();
 		setMarkdownVal("");
+	};
+
+	const onImageUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const target = event.target as HTMLInputElement;
+		const file: File = (target.files as FileList)[0];
+		const imageData = new FormData();
+		imageData.append("image", file);
+		uploadImageMutate(imageData);
 	};
 
 	return (
@@ -67,9 +77,12 @@ export const CreateArticle = (): JSX.Element => {
 					sx={{ marginBottom: "2rem" }}
 				/>
 				<Typography variant="h5">Featured image</Typography>
-				<Button variant="contained" color="secondary" sx={{ marginBottom: "2rem" }}>
-					Upload an Image
-				</Button>
+				<input accept="image/*" style={{ display: "none" }} id="button-file" multiple type="file" onChange={onImageUploadChange} />
+				<label htmlFor="button-file">
+					<Button variant="contained" component="span" color="secondary" sx={{ marginBottom: "2rem" }}>
+						Upload an Image
+					</Button>
+				</label>
 				<Typography variant="h5">Content</Typography>
 				<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} />
 			</form>

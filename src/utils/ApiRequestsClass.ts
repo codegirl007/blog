@@ -37,6 +37,24 @@ export class ApiRequests {
 		return response;
 	};
 
+	static uploadImage = async (newImage: FormData) => {
+		const response = await axiosInstance({
+			method: "POST",
+			url: "images",
+			data: newImage,
+		});
+		return response.data;
+	};
+
+	static getImageData = async (imageId: string) => {
+		const response = await axiosInstance({
+			method: "GET",
+			url: `images/${imageId}`,
+			responseType: "blob",
+		});
+		return response;
+	};
+
 	static authorize = async (loginData: LoginType) => {
 		const { data } = await axiosInstance({
 			method: "POST",
