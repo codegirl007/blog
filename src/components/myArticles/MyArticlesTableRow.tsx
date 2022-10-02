@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/styles";
 import { useMutation, useQueryClient } from "react-query";
 import { ApiRequests } from "../../utils/ApiRequestsClass";
+import { useNavigate } from "react-router-dom";
 
 const Styled = {
 	Typography: styled(Typography)({
@@ -30,6 +31,7 @@ type Props = {
 
 export const MyArticlesTableRow = (props: Props): JSX.Element => {
 	const { article } = props;
+	const navigate = useNavigate();
 	const userName = authStore.useStore((state) => state.userName, shallow);
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation("deleteArticle", (id: string) => ApiRequests.deleteArticle(id), {
@@ -60,7 +62,7 @@ export const MyArticlesTableRow = (props: Props): JSX.Element => {
 			</TableCell>
 			<TableCell>
 				<HBox>
-					<IconButton>
+					<IconButton onClick={() => navigate(`editArticle/${article.articleId}`)}>
 						<EditIcon />
 					</IconButton>
 					<IconButton onClick={deleteArticle}>

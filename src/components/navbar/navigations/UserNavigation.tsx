@@ -14,7 +14,7 @@ export const UserNavigation = (): JSX.Element => {
 			{authorized ? (
 				<div style={{ display: "flex" }}>
 					<CustomNavLink to="/myArticles">My Articles</CustomNavLink>
-					<CustomNavLink to="/createArticle">Create Article</CustomNavLink>
+					<CustomNavLink to="/myArticles/createArticle">Create Article</CustomNavLink>
 					<CustomNavLink to="/" onClick={logoutUser}>
 						Logout
 					</CustomNavLink>

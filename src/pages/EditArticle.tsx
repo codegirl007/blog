@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { ApiRequests } from "../utils/ApiRequestsClass";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useForm } from "react-hook-form";
 import { NewArticleType } from "../types/NewArticleType";
 import { styled } from "@mui/material/styles";
 import { MarkDownEditor } from "../components/markdown/MarkDownEditor";
 import { v4 as uuid } from "uuid";
 import { HBox } from "../styles/customComponents.tsx/HBox";
+import { useNavigate, useParams } from "react-router-dom";
+import { DetailedArticleResponseType } from "../types/DetailedArticleResponseType";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({
@@ -17,12 +19,14 @@ export const Styled = {
 	}),
 };
 
-export const CreateArticle = (): JSX.Element => {
+export const EditArticle = (): JSX.Element => {
+	const { articleId } = useParams<string>();
+	const { data: detailedArticleData } = useQuery<DetailedArticleResponseType, Error>("detailedArticle", () =>
+		ApiRequests.getDetailedArticle(articleId)
+	);
 	const [markdownVal, setMarkdownVal] = useState("");
-	const { mutate: createArticleMutate } = useMutation("createArticle", ApiRequests.createNewArticle);
-	const { data: imageIdData, mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage, {
-		onSuccess: () => {},
-	});
+	const { mutate: editArticleMutate } = useMutation("editArticle", (data: NewArticleType) => ApiRequests.editArticle(data));
+	const { data: imageIdData, mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage);
 
 	const {
 		register,
@@ -34,16 +38,15 @@ export const CreateArticle = (): JSX.Element => {
 	});
 
 	const onSubmit = (formData: NewArticleType): void => {
-		const uniqueId = uuid();
-		createArticleMutate({
-			articleId: uniqueId,
-			title: formData.title,
-			perex: markdownVal.substring(0, 500),
-			imageId: imageIdData[0].imageId,
-			content: markdownVal,
-		});
-		reset();
-		setMarkdownVal("");
+		if (articleId) {
+			editArticleMutate({
+				...formData,
+				articleId: articleId,
+				title: formData.title,
+				//imageId: imageIdData[0].imageId,
+				content: markdownVal || "",
+			});
+		}
 	};
 
 	const onImageUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,11 +57,18 @@ export const CreateArticle = (): JSX.Element => {
 		uploadImageMutate(imageData);
 	};
 
+	useEffect(() => {
+		if (detailedArticleData) {
+			setMarkdownVal(detailedArticleData.content);
+			reset({ title: detailedArticleData.title });
+		}
+	}, [detailedArticleData, reset]);
+
 	return (
 		<Styled.ArticlesContainer>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<HBox sx={{ marginBottom: "4rem" }}>
-					<Typography variant="h1">Create new article</Typography>
+					<Typography variant="h1">Edit article</Typography>
 					<Button variant="contained" type="submit">
 						Publish Article
 					</Button>

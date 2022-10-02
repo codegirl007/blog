@@ -12,7 +12,7 @@ export const MyArticles = (): JSX.Element => {
 		<>
 			<HBox sx={{ marginBottom: "4rem" }}>
 				<Typography variant="h1">My Articles</Typography>
-				<Button variant="contained" onClick={() => navigate("/createArticle")}>
+				<Button variant="contained" onClick={() => navigate("/myArticles/createArticle")}>
 					Create new article
 				</Button>
 			</HBox>

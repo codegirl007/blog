@@ -29,6 +29,15 @@ export class ApiRequests {
 		return response.data;
 	};
 
+	static editArticle = async (newArticleData: NewArticleType) => {
+		const response = await axiosInstance({
+			method: "PATCH",
+			url: `articles/${newArticleData.articleId}`,
+			data: newArticleData,
+		});
+		return response;
+	};
+
 	static deleteArticle = async (id: string) => {
 		const response = await axiosInstance({
 			method: "DELETE",

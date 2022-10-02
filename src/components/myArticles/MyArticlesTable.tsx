@@ -7,7 +7,9 @@ import { MyArticlesTableRow } from "./MyArticlesTableRow";
 import TableBody from "@mui/material/TableBody";
 
 export const MyArticlesTable = (): JSX.Element => {
-	const { data, isFetching } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles);
+	const { data, isFetching } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles, {
+		refetchOnWindowFocus: false,
+	});
 
 	if (isFetching) {
 		return <div>Loading...</div>;
