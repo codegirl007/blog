@@ -8,6 +8,7 @@ import { EditArticle } from "../pages/EditArticle";
 import { Login } from "../pages/Login";
 import { MyArticles } from "../pages/MyArticles";
 import { RecentArticles } from "../pages/RecentArticles";
+import { imageStore } from "../stores/imageStore";
 
 const Styled = {
 	RoutesContainer: styled("div")({

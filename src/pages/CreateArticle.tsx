@@ -3,17 +3,27 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { ApiRequests } from "../utils/ApiRequestsClass";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import { useForm } from "react-hook-form";
 import { NewArticleType } from "../types/NewArticleType";
 import { styled } from "@mui/material/styles";
 import { MarkDownEditor } from "../components/markdown/MarkDownEditor";
 import { v4 as uuid } from "uuid";
 import { HBox } from "../styles/customComponents.tsx/HBox";
+import { imageStore } from "../stores/imageStore";
+import shallow from "zustand/shallow";
+import { ArticleImage } from "../components/articleImage/ArticleImage";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({
 		width: "76rem",
+	}),
+	ImageContainer: styled("div")({
+		minWidth: "11.2rem",
+		width: "11.2rem",
+		height: "7.4rem",
+		marginBottom: "0.8rem",
+		objectFit: "cover",
 	}),
 };
 
@@ -21,8 +31,13 @@ export const CreateArticle = (): JSX.Element => {
 	const [markdownVal, setMarkdownVal] = useState("");
 	const { mutate: createArticleMutate } = useMutation("createArticle", ApiRequests.createNewArticle);
 	const { data: imageIdData, mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage, {
-		onSuccess: () => {},
+		onSuccess: (data) => {
+			imageStore.setImageUploaded();
+			data[0].imageId && imageStore.addImageId(data[0].imageId);
+		},
 	});
+	const imageId = imageStore.useStore((state) => state.imageId, shallow);
+	const imageUploaded = imageStore.useStore((state) => state.imageUploaded, shallow);
 
 	const {
 		register,
@@ -43,6 +58,7 @@ export const CreateArticle = (): JSX.Element => {
 			content: markdownVal,
 		});
 		reset();
+		imageStore.resetImage();
 		setMarkdownVal("");
 	};
 
@@ -79,12 +95,35 @@ export const CreateArticle = (): JSX.Element => {
 					sx={{ marginBottom: "2rem" }}
 				/>
 				<Typography variant="h5">Featured image</Typography>
-				<input accept="image/*" style={{ display: "none" }} id="button-file" multiple type="file" onChange={onImageUploadChange} />
-				<label htmlFor="button-file">
-					<Button variant="contained" component="span" color="secondary" sx={{ marginBottom: "2rem" }}>
-						Upload an Image
-					</Button>
-				</label>
+				{imageUploaded && (
+					<Styled.ImageContainer>
+						<ArticleImage imageId={imageId} />
+					</Styled.ImageContainer>
+				)}
+				<HBox sx={{ marginBottom: "2rem" }}>
+					<input
+						accept="image/*"
+						style={{ display: "none" }}
+						id="button-file"
+						multiple
+						type="file"
+						onChange={onImageUploadChange}
+					/>
+					<label htmlFor="button-file">
+						<Button
+							variant={imageUploaded ? "text" : "contained"}
+							component="span"
+							color={imageUploaded ? "primary" : "secondary"}
+						>
+							{imageUploaded ? "Upload New" : "Upload an Image"}
+						</Button>
+					</label>
+					{imageUploaded && (
+						<Button color="error" onClick={() => imageStore.resetImage()}>
+							Delete
+						</Button>
+					)}
+				</HBox>
 				<Typography variant="h5">Content</Typography>
 				<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} />
 			</form>
