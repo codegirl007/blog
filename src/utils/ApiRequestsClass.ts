@@ -1,4 +1,5 @@
 import { authStore } from "../stores/authStore";
+import { CommentRequestType } from "../types/CommentRequestType";
 import { LoginType } from "../types/LoginType";
 import { NewArticleType } from "../types/NewArticleType";
 import { axiosInstance } from "./axiosInstance";
@@ -64,6 +65,23 @@ export class ApiRequests {
 		return response;
 	};
 
+	static deleteImageData = async (imageId: string) => {
+		const response = await axiosInstance({
+			method: "DELETE",
+			url: `images/${imageId}`,
+		});
+		return response;
+	};
+
+	static createComment = async (newComment: CommentRequestType) => {
+		const response = await axiosInstance({
+			method: "POST",
+			url: "comments",
+			data: newComment,
+		});
+		return response.data;
+	};
+
 	static authorize = async (loginData: LoginType) => {
 		const { data } = await axiosInstance({
 			method: "POST",
@@ -73,5 +91,13 @@ export class ApiRequests {
 		authStore.addToken(data.access_token);
 		authStore.logInUser();
 		authStore.addUserName(loginData.username);
+	};
+
+	static getTenant = async (tenantId: string) => {
+		const response = await axiosInstance({
+			method: "GET",
+			url: `tenants/${tenantId}`,
+		});
+		return response.data;
 	};
 }

@@ -2,6 +2,9 @@ export type Comments = {
 	articleId: string;
 	author: string;
 	content: string;
+	postedAt: string;
+	score: number;
+	commentId: string;
 };
 export type DetailedArticleResponseType = {
 	articleId: string;

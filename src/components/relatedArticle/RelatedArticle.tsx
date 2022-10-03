@@ -2,7 +2,8 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import { VBox } from "../../styles/customComponents.tsx/VBox";
 import { styled } from "@mui/material/styles";
-import { NavLink } from "react-router-dom";
+import { unstable_HistoryRouter, useNavigate } from "react-router-dom";
+import { themeColors } from "../../styles/mainTheme/themeColors";
 
 export const Styled = {
 	ArticlePerex: styled(Typography)({
@@ -23,6 +24,13 @@ export const Styled = {
 		},
 		fontWeight: 600,
 	}),
+	VBox: styled(VBox)({
+		marginBottom: "2.4rem",
+		cursor: "pointer",
+		"&:hover": {
+			backgroundColor: themeColors.greys.lightGrey,
+		},
+	}),
 };
 
 type Props = {
@@ -32,10 +40,16 @@ type Props = {
 };
 
 export const RelatedArticle = (props: Props): JSX.Element => {
+	const navigate = useNavigate();
+
 	return (
-		<VBox sx={{ marginBottom: "2.4rem" }}>
+		<Styled.VBox
+			onClick={() => {
+				navigate(`/${props.articleId}`);
+			}}
+		>
 			<Styled.Title variant="h6">{props.title}</Styled.Title>
 			<Styled.ArticlePerex variant="body1">{props.perex}</Styled.ArticlePerex>
-		</VBox>
+		</Styled.VBox>
 	);
 };

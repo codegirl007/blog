@@ -11,7 +11,8 @@ import { themeColors } from "../styles/mainTheme/themeColors";
 import { ArticleListResponseType } from "../types/ArticleListResponseType";
 import { RelatedArticle } from "../components/relatedArticle/RelatedArticle";
 import { ArticleImage } from "../components/articleImage/ArticleImage";
-import { CustomNavLink } from "../styles/customComponents.tsx/CustomNavLink";
+import { CreateCommentInput } from "../components/comments/CreateCommentInput ";
+import { CommentsList } from "../components/comments/CommentsList";
 
 export const Styled = {
 	DetailedArticleContainer: styled("div")({
@@ -45,6 +46,12 @@ export const Styled = {
 			height: "100%",
 		},
 	}),
+	HorizontalLine: styled("hr")({
+		backgroundColor: themeColors.greys.borderLight,
+		border: "none",
+		height: "0.1rem",
+		margin: "2.4rem 0",
+	}),
 };
 
 export const DetailedArticle = (): JSX.Element => {
@@ -53,7 +60,7 @@ export const DetailedArticle = (): JSX.Element => {
 		data: detailedArticleData,
 		error,
 		isLoading,
-	} = useQuery<DetailedArticleResponseType, Error>("detailedArticle", () => ApiRequests.getDetailedArticle(articleId));
+	} = useQuery<DetailedArticleResponseType, Error>(["detailedArticle", articleId], () => ApiRequests.getDetailedArticle(articleId));
 	const { data: articlesData } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles);
 
 	if (isLoading) {
@@ -67,17 +74,19 @@ export const DetailedArticle = (): JSX.Element => {
 	return (
 		<HBox sx={{ alignItems: "start", justifyContent: "space-between" }}>
 			<Styled.DetailedArticleContainer>
-				<>
-					<Styled.Typography variant="h1">{detailedArticleData?.title}</Styled.Typography>
-					{detailedArticleData && <Styled.ArticleCreationInfo article={detailedArticleData} />}
-					<Styled.DetailedArticleImage>
-						{detailedArticleData?.imageId && <ArticleImage imageId={detailedArticleData?.imageId} />}
-					</Styled.DetailedArticleImage>
-					<Typography variant="body1" sx={{ margin: "2.4rem 0" }}>
-						{detailedArticleData?.content}
-					</Typography>
-				</>
+				<Styled.Typography variant="h1">{detailedArticleData?.title}</Styled.Typography>
+				{detailedArticleData && <Styled.ArticleCreationInfo article={detailedArticleData} />}
+				<Styled.DetailedArticleImage>
+					{detailedArticleData?.imageId && <ArticleImage imageId={detailedArticleData?.imageId} />}
+				</Styled.DetailedArticleImage>
+				<Typography variant="body1" sx={{ margin: "2.4rem 0" }}>
+					{detailedArticleData?.content}
+				</Typography>
+				<Styled.HorizontalLine />
+				<CreateCommentInput articleId={articleId} />
+				{detailedArticleData && <CommentsList comments={detailedArticleData.comments} />}
 			</Styled.DetailedArticleContainer>
+
 			<Styled.AsideContainer>
 				<Typography variant="h4">Related Articles</Typography>
 				{articlesData?.items.map((article) => (

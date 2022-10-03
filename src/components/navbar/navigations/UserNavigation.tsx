@@ -8,6 +8,7 @@ export const UserNavigation = (): JSX.Element => {
 
 	const logoutUser = (): void => {
 		authStore.logOutUser();
+		authStore.addToken("");
 	};
 	return (
 		<>
