@@ -11,8 +11,6 @@ import { MarkDownEditor } from "../components/markdown/MarkDownEditor";
 import { HBox } from "../styles/customComponents.tsx/HBox";
 import { useParams } from "react-router-dom";
 import { DetailedArticleResponseType } from "../types/DetailedArticleResponseType";
-import { imageStore } from "../stores/imageStore";
-import shallow from "zustand/shallow";
 import { ArticleImage } from "../components/articleImage/ArticleImage";
 
 export const Styled = {
@@ -30,19 +28,23 @@ export const Styled = {
 
 export const EditArticle = (): JSX.Element => {
 	const { articleId } = useParams<string>();
-	const { data: detailedArticleData } = useQuery<DetailedArticleResponseType, Error>("detailedArticle", () =>
-		ApiRequests.getDetailedArticle(articleId)
+	const [imageId, setImageId] = useState("");
+	const { data: detailedArticleData } = useQuery<DetailedArticleResponseType, Error>(
+		"detailedArticle",
+		() => ApiRequests.getDetailedArticle(articleId),
+		{
+			onSuccess: (data) => {
+				setImageId(data.imageId);
+			},
+		}
 	);
 	const [markdownVal, setMarkdownVal] = useState("");
 	const { mutate: editArticleMutate } = useMutation("editArticle", (data: NewArticleType) => ApiRequests.editArticle(data));
 	const { mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage, {
 		onSuccess: (data) => {
-			imageStore.setImageUploaded();
-			data[0].imageId && imageStore.addImageId(data[0].imageId);
+			data[0].imageId && setImageId(data[0].imageId);
 		},
 	});
-	const imageId = imageStore.useStore((state) => state.imageId, shallow);
-	const imageUploaded = imageStore.useStore((state) => state.imageUploaded, shallow);
 
 	const {
 		register,
@@ -64,7 +66,7 @@ export const EditArticle = (): JSX.Element => {
 			});
 		}
 		reset();
-		imageStore.resetImage();
+		setImageId("");
 	};
 
 	const onImageUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,16 +110,11 @@ export const EditArticle = (): JSX.Element => {
 				/>
 				<Typography variant="h5">Featured image</Typography>
 
-				<Styled.ImageContainer>
-					{imageId ? (
+				{imageId && (
+					<Styled.ImageContainer>
 						<ArticleImage imageId={imageId} />
-					) : detailedArticleData ? (
-						<ArticleImage imageId={detailedArticleData?.imageId} />
-					) : (
-						<div>No Data</div>
-					)}
-				</Styled.ImageContainer>
-
+					</Styled.ImageContainer>
+				)}
 				<HBox sx={{ marginBottom: "2rem" }}>
 					<input
 						accept="image/*"
@@ -128,14 +125,15 @@ export const EditArticle = (): JSX.Element => {
 						onChange={onImageUploadChange}
 					/>
 					<label htmlFor="button-file">
-						<Button variant="text" component="span" color={"primary"}>
-							Upload New
+						<Button variant={imageId ? "text" : "contained"} component="span" color={imageId ? "primary" : "secondary"}>
+							{imageId ? "Upload New" : "Upload an Image"}
 						</Button>
 					</label>
-
-					<Button color="error" onClick={() => imageStore.resetImage()}>
-						Delete
-					</Button>
+					{imageId && (
+						<Button color="error" onClick={() => setImageId("")}>
+							Delete
+						</Button>
+					)}
 				</HBox>
 				<Typography variant="h5">Content</Typography>
 				<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} />

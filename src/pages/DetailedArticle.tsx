@@ -11,6 +11,7 @@ import { themeColors } from "../styles/mainTheme/themeColors";
 import { ArticleListResponseType } from "../types/ArticleListResponseType";
 import { RelatedArticle } from "../components/relatedArticle/RelatedArticle";
 import { ArticleImage } from "../components/articleImage/ArticleImage";
+import { CustomNavLink } from "../styles/customComponents.tsx/CustomNavLink";
 
 export const Styled = {
 	DetailedArticleContainer: styled("div")({

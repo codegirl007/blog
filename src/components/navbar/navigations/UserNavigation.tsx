@@ -15,7 +15,7 @@ export const UserNavigation = (): JSX.Element => {
 				<div style={{ display: "flex" }}>
 					<CustomNavLink to="/myArticles">My Articles</CustomNavLink>
 					<CustomNavLink to="/myArticles/createArticle">Create Article</CustomNavLink>
-					<CustomNavLink to="/" onClick={logoutUser}>
+					<CustomNavLink to="/login" onClick={logoutUser}>
 						Logout
 					</CustomNavLink>
 				</div>

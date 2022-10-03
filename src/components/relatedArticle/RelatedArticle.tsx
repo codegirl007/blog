@@ -13,6 +13,15 @@ export const Styled = {
 		textOverflow: "ellipsis",
 		width: "100%",
 		whiteSpace: "normal",
+		"&:first-letter": {
+			textTransform: "uppercase",
+		},
+	}),
+	Title: styled(Typography)({
+		"&:first-letter": {
+			textTransform: "uppercase",
+		},
+		fontWeight: 600,
 	}),
 };
 
@@ -25,9 +34,7 @@ type Props = {
 export const RelatedArticle = (props: Props): JSX.Element => {
 	return (
 		<VBox sx={{ marginBottom: "2.4rem" }}>
-			<Typography variant="h6" sx={{ fontWeight: 600 }}>
-				{props.title}
-			</Typography>
+			<Styled.Title variant="h6">{props.title}</Styled.Title>
 			<Styled.ArticlePerex variant="body1">{props.perex}</Styled.ArticlePerex>
 		</VBox>
 	);

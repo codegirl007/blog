@@ -10,8 +10,6 @@ import { styled } from "@mui/material/styles";
 import { MarkDownEditor } from "../components/markdown/MarkDownEditor";
 import { v4 as uuid } from "uuid";
 import { HBox } from "../styles/customComponents.tsx/HBox";
-import { imageStore } from "../stores/imageStore";
-import shallow from "zustand/shallow";
 import { ArticleImage } from "../components/articleImage/ArticleImage";
 
 export const Styled = {
@@ -29,15 +27,13 @@ export const Styled = {
 
 export const CreateArticle = (): JSX.Element => {
 	const [markdownVal, setMarkdownVal] = useState("");
+	const [imageId, setImageId] = useState("");
 	const { mutate: createArticleMutate } = useMutation("createArticle", ApiRequests.createNewArticle);
 	const { data: imageIdData, mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage, {
 		onSuccess: (data) => {
-			imageStore.setImageUploaded();
-			data[0].imageId && imageStore.addImageId(data[0].imageId);
+			data[0].imageId && setImageId(data[0].imageId);
 		},
 	});
-	const imageId = imageStore.useStore((state) => state.imageId, shallow);
-	const imageUploaded = imageStore.useStore((state) => state.imageUploaded, shallow);
 
 	const {
 		register,
@@ -58,7 +54,7 @@ export const CreateArticle = (): JSX.Element => {
 			content: markdownVal,
 		});
 		reset();
-		imageStore.resetImage();
+		setImageId("");
 		setMarkdownVal("");
 	};
 
@@ -95,7 +91,7 @@ export const CreateArticle = (): JSX.Element => {
 					sx={{ marginBottom: "2rem" }}
 				/>
 				<Typography variant="h5">Featured image</Typography>
-				{imageUploaded && (
+				{imageId && (
 					<Styled.ImageContainer>
 						<ArticleImage imageId={imageId} />
 					</Styled.ImageContainer>
@@ -110,16 +106,12 @@ export const CreateArticle = (): JSX.Element => {
 						onChange={onImageUploadChange}
 					/>
 					<label htmlFor="button-file">
-						<Button
-							variant={imageUploaded ? "text" : "contained"}
-							component="span"
-							color={imageUploaded ? "primary" : "secondary"}
-						>
-							{imageUploaded ? "Upload New" : "Upload an Image"}
+						<Button variant={imageId ? "text" : "contained"} component="span" color={imageId ? "primary" : "secondary"}>
+							{imageId ? "Upload New" : "Upload an Image"}
 						</Button>
 					</label>
-					{imageUploaded && (
-						<Button color="error" onClick={() => imageStore.resetImage()}>
+					{imageId && (
+						<Button color="error" onClick={() => setImageId("")}>
 							Delete
 						</Button>
 					)}
