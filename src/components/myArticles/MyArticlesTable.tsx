@@ -20,9 +20,9 @@ export const MyArticlesTable = (): JSX.Element => {
 			<Table>
 				<TableHead>
 					<TableRow>
-						<TableCell>Article title</TableCell>
-						<TableCell>Perex</TableCell>
-						<TableCell>Author</TableCell>
+						<TableCell sx={{ maxWidth: "40rem" }}>Article title</TableCell>
+						<TableCell sx={{ maxWidth: "50rem" }}>Perex</TableCell>
+						<TableCell sx={{ maxWidth: "50rem" }}>Author</TableCell>
 						<TableCell># of comments</TableCell>
 						<TableCell>Actions</TableCell>
 					</TableRow>

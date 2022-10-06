@@ -12,6 +12,9 @@ import { HBox } from "../styles/customComponents.tsx/HBox";
 import { useParams } from "react-router-dom";
 import { DetailedArticleResponseType } from "../types/DetailedArticleResponseType";
 import { ArticleImage } from "../components/articleImage/ArticleImage";
+import { showNotification } from "../actions/notificationActions";
+import { NotificationVariantEnum } from "../model/NotificationVariantEnum";
+import { NotificationBehaviourEnum } from "../model/NotificationBehaviourEnum";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({
@@ -43,9 +46,28 @@ export const EditArticle = (): JSX.Element => {
 	const { mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage, {
 		onSuccess: (data) => {
 			data[0].imageId && setImageId(data[0].imageId);
+			showNotification(
+				NotificationVariantEnum.SUCCESS,
+				"Your Image has been successfully deleted!",
+				NotificationBehaviourEnum.HIDE_AUTO
+			);
+		},
+		onError: () => {
+			showNotification(NotificationVariantEnum.ERROR, "Unable to delete image!");
 		},
 	});
-	const { mutate: deleteImageMutate } = useMutation("deleteImage", (id: string) => ApiRequests.deleteImageData(id));
+	const { mutate: deleteImageMutate } = useMutation("deleteImage", (id: string) => ApiRequests.deleteImageData(id), {
+		onSuccess: () => {
+			showNotification(
+				NotificationVariantEnum.SUCCESS,
+				"Your Image has been successfully deleted!",
+				NotificationBehaviourEnum.HIDE_AUTO
+			);
+		},
+		onError: () => {
+			showNotification(NotificationVariantEnum.ERROR, "Unable to delete image!", NotificationBehaviourEnum.HIDE_AUTO);
+		},
+	});
 
 	const {
 		register,

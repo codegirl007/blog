@@ -25,7 +25,7 @@ export const table: ThemeOptions["components"] = {
 	MuiTableCell: {
 		styleOverrides: {
 			root: {
-				padding: 0,
+				padding: "0 1.5rem",
 				height: "2rem",
 				"&:first-letter": {
 					textTransform: "uppercase",

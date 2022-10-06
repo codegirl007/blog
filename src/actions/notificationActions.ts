@@ -3,18 +3,17 @@ import { NotificationVariantEnum } from "../model/NotificationVariantEnum";
 import { notificationStore } from "../stores/notificationStore";
 import { NotificationInfo } from "../types/NotificationInfoType";
 
-const AUTO_HIDE_DURATION_DEFAULT = 5000;
+const AUTO_HIDE_DURATION_DEFAULT = 3000;
 
 export const showNotification = (
 	variant: NotificationVariantEnum,
 	message: string,
-	description?: string,
 	behaviour?: NotificationBehaviourEnum
 ): NotificationInfo => {
 	let autoHideDuration: number | null;
 	let closeButton: boolean;
 	if (!behaviour) {
-		behaviour = variant === NotificationVariantEnum.ERROR ? NotificationBehaviourEnum.HIDE_NEVER : NotificationBehaviourEnum.HIDE_AUTO;
+		behaviour = NotificationBehaviourEnum.HIDE_AUTO;
 	}
 
 	switch (behaviour) {

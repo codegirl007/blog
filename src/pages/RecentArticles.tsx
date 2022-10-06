@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import _ from "lodash";
 import { ArticleListResponseType } from "../types/ArticleListResponseType";
 import { ArticleListItem } from "../components/recentArticlesList/ArticleListItem";
+import { ContainerLoading } from "../components/loading/LoadingComponent";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({
@@ -16,10 +17,6 @@ export const Styled = {
 export const RecentArticles = (): JSX.Element => {
 	const { data, error, isLoading } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles);
 
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
 	if (error) {
 		return <p>{error.message}</p>;
 	}
@@ -28,14 +25,16 @@ export const RecentArticles = (): JSX.Element => {
 
 	return (
 		<>
-			<Typography variant="h1" sx={{ marginBottom: "4rem" }}>
-				Recent Articles
-			</Typography>
-			<Styled.ArticlesContainer>
-				{sortedArticles.map((article) => (
-					<ArticleListItem key={article.articleId} article={article} />
-				))}
-			</Styled.ArticlesContainer>
+			<ContainerLoading loading={isLoading}>
+				<Typography variant="h1" sx={{ marginBottom: "4rem" }}>
+					Recent Articles
+				</Typography>
+				<Styled.ArticlesContainer>
+					{sortedArticles.map((article) => (
+						<ArticleListItem key={article.articleId} article={article} />
+					))}
+				</Styled.ArticlesContainer>
+			</ContainerLoading>
 		</>
 	);
 };

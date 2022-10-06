@@ -11,6 +11,9 @@ import { MarkDownEditor } from "../components/markdown/MarkDownEditor";
 import { v4 as uuid } from "uuid";
 import { HBox } from "../styles/customComponents.tsx/HBox";
 import { ArticleImage } from "../components/articleImage/ArticleImage";
+import { NotificationBehaviourEnum } from "../model/NotificationBehaviourEnum";
+import { NotificationVariantEnum } from "../model/NotificationVariantEnum";
+import { showNotification } from "../actions/notificationActions";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({
@@ -28,13 +31,43 @@ export const Styled = {
 export const CreateArticle = (): JSX.Element => {
 	const [markdownVal, setMarkdownVal] = useState("");
 	const [imageId, setImageId] = useState("");
-	const { mutate: createArticleMutate } = useMutation("createArticle", ApiRequests.createNewArticle);
+	const { mutate: createArticleMutate } = useMutation("createArticle", ApiRequests.createNewArticle, {
+		onSuccess: () => {
+			showNotification(
+				NotificationVariantEnum.SUCCESS,
+				"Your Article has been successfully published!",
+				NotificationBehaviourEnum.HIDE_AUTO
+			);
+		},
+		onError: () => {
+			showNotification(NotificationVariantEnum.ERROR, "Unable to publish article!", NotificationBehaviourEnum.HIDE_AUTO);
+		},
+	});
 	const { data: imageIdData, mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage, {
 		onSuccess: (data) => {
 			data[0].imageId && setImageId(data[0].imageId);
+			showNotification(
+				NotificationVariantEnum.SUCCESS,
+				"Your Image has been successfully uploaded!",
+				NotificationBehaviourEnum.HIDE_AUTO
+			);
+		},
+		onError: () => {
+			showNotification(NotificationVariantEnum.ERROR, "Unable to upload image!", NotificationBehaviourEnum.HIDE_AUTO);
 		},
 	});
-	const { mutate: deleteImageMutate } = useMutation("deleteImage", (id: string) => ApiRequests.deleteImageData(id));
+	const { mutate: deleteImageMutate } = useMutation("deleteImage", (id: string) => ApiRequests.deleteImageData(id), {
+		onSuccess: () => {
+			showNotification(
+				NotificationVariantEnum.SUCCESS,
+				"Your Image has been successfully deleted!",
+				NotificationBehaviourEnum.HIDE_AUTO
+			);
+		},
+		onError: () => {
+			showNotification(NotificationVariantEnum.ERROR, "Unable to delete image!", NotificationBehaviourEnum.HIDE_AUTO);
+		},
+	});
 
 	const {
 		register,
