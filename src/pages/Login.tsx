@@ -11,7 +11,7 @@ import { showNotification } from "../actions/notificationActions";
 import { NotificationVariantEnum } from "../model/NotificationVariantEnum";
 import { NotificationBehaviourEnum } from "../model/NotificationBehaviourEnum";
 import { ContainerLoading } from "../components/loading/LoadingComponent";
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { LoginResponseType } from "../types/LoginResponseType";
 
 const Styled = {
@@ -29,8 +29,9 @@ export const Login = (): JSX.Element => {
 		onSuccess: () => {
 			navigate("/myArticles");
 		},
-		onError: () => {
-			showNotification(NotificationVariantEnum.ERROR, "Unable to log in", NotificationBehaviourEnum.HIDE_AUTO);
+		onError: (error: AxiosError) => {
+			const errorResponse = error.response as AxiosResponse;
+			showNotification(NotificationVariantEnum.ERROR, `${errorResponse.data.message}!`, NotificationBehaviourEnum.HIDE_AUTO);
 		},
 	});
 
