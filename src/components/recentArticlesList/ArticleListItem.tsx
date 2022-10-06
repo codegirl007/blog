@@ -7,6 +7,9 @@ import { ArticleType } from "../../types/ArticleType";
 import { ArticleCreationInfo } from "./ArticleCreationInfo";
 import { NavLink } from "react-router-dom";
 import { HBox } from "../../styles/customComponents.tsx/HBox";
+import { ApiRequests } from "../../utils/ApiRequestsClass";
+import { DetailedArticleResponseType } from "../../types/DetailedArticleResponseType";
+import { useQuery } from "react-query";
 
 export const Styled = {
 	ArticleWrapper: styled("div")({
@@ -57,6 +60,9 @@ type Props = {
 
 export const ArticleListItem = (props: Props): JSX.Element => {
 	const { article } = props;
+	const { data: detailedArticleData } = useQuery<DetailedArticleResponseType, Error>(["detailedArticle", article.articleId], () =>
+		ApiRequests.getDetailedArticle(article.articleId)
+	);
 
 	return (
 		<Styled.ArticleWrapper>
@@ -69,6 +75,9 @@ export const ArticleListItem = (props: Props): JSX.Element => {
 				<Styled.ArticlePerex variant="body1">{article.perex}</Styled.ArticlePerex>
 				<HBox sx={{ margin: "2rem 0" }}>
 					<Styled.NavLink to={`/${article.articleId}`}>Read whole article</Styled.NavLink>
+					<Typography variant="body1" color="secondary" sx={{ marginLeft: "2rem" }}>
+						{detailedArticleData?.comments.length} comments
+					</Typography>
 				</HBox>
 			</Styled.ContentContainer>
 		</Styled.ArticleWrapper>

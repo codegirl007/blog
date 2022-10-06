@@ -2,12 +2,12 @@ import { TextField, Typography } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { CommentDataType } from "../../types/CommentDataType";
 import { TenantInfoType } from "../../types/TenantInfoType";
 import { ApiRequests } from "../../utils/ApiRequestsClass";
 
 type Props = {
 	articleId: string | undefined;
+	commentsNumber: number | undefined;
 };
 
 export const CreateCommentInput = (props: Props): JSX.Element => {
@@ -20,6 +20,7 @@ export const CreateCommentInput = (props: Props): JSX.Element => {
 			queryClient.invalidateQueries("detailedArticle");
 		},
 	});
+
 	const { register, handleSubmit, reset } = useForm({
 		mode: "onBlur",
 	});
@@ -36,7 +37,7 @@ export const CreateCommentInput = (props: Props): JSX.Element => {
 	};
 	return (
 		<>
-			<Typography variant="h4">Comments&nbsp;()</Typography>
+			<Typography variant="h4">Comments&nbsp;({props.commentsNumber})</Typography>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<TextField
 					variant="outlined"

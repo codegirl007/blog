@@ -82,6 +82,22 @@ export class ApiRequests {
 		return response.data;
 	};
 
+	static upvoteComment = async (commentId: string) => {
+		const response = await axiosInstance({
+			method: "POST",
+			url: `comments/${commentId}/vote/up`,
+		});
+		return response;
+	};
+
+	static downvoteComment = async (commentId: string) => {
+		const response = await axiosInstance({
+			method: "POST",
+			url: `comments/${commentId}/vote/down`,
+		});
+		return response;
+	};
+
 	static authorize = async (loginData: LoginType) => {
 		const { data } = await axiosInstance({
 			method: "POST",

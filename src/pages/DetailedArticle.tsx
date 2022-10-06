@@ -83,7 +83,7 @@ export const DetailedArticle = (): JSX.Element => {
 					{detailedArticleData?.content}
 				</Typography>
 				<Styled.HorizontalLine />
-				<CreateCommentInput articleId={articleId} />
+				<CreateCommentInput articleId={articleId} commentsNumber={detailedArticleData?.comments.length} />
 				{detailedArticleData && <CommentsList comments={detailedArticleData.comments} />}
 			</Styled.DetailedArticleContainer>
 

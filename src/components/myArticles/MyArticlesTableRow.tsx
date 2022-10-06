@@ -10,9 +10,10 @@ import { RemoveIcon } from "../../styles/icons/RemoveIcon";
 import { IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/styles";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ApiRequests } from "../../utils/ApiRequestsClass";
 import { useNavigate } from "react-router-dom";
+import { DetailedArticleResponseType } from "../../types/DetailedArticleResponseType";
 
 const Styled = {
 	Typography: styled(Typography)({
@@ -39,12 +40,14 @@ export const MyArticlesTableRow = (props: Props): JSX.Element => {
 			queryClient.invalidateQueries("articles");
 		},
 	});
-
 	const deleteArticle = () => {
 		if (article.articleId) {
 			mutate(article.articleId);
 		}
 	};
+	const { data: detailedArticleData } = useQuery<DetailedArticleResponseType, Error>(["detailedArticle", article.articleId], () =>
+		ApiRequests.getDetailedArticle(article.articleId)
+	);
 
 	return (
 		<TableRow>
@@ -58,7 +61,7 @@ export const MyArticlesTableRow = (props: Props): JSX.Element => {
 				<Styled.Typography>{userName}</Styled.Typography>
 			</TableCell>
 			<TableCell>
-				<Styled.Typography>100</Styled.Typography>
+				<Styled.Typography>{detailedArticleData?.comments.length}</Styled.Typography>
 			</TableCell>
 			<TableCell>
 				<HBox>

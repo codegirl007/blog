@@ -9,7 +9,7 @@ type Props = {
 
 export const CommentsList = (props: Props): JSX.Element => {
 	const { comments } = props;
-	const sortedComments = _.orderBy(comments, ["postedAt"], ["desc"]);
+	const sortedComments = _.orderBy(comments, ["createdAt"], ["desc"]);
 	return (
 		<>
 			{sortedComments.map((comment) => (

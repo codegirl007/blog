@@ -45,6 +45,7 @@ export const EditArticle = (): JSX.Element => {
 			data[0].imageId && setImageId(data[0].imageId);
 		},
 	});
+	const { mutate: deleteImageMutate } = useMutation("deleteImage", (id: string) => ApiRequests.deleteImageData(id));
 
 	const {
 		register,
@@ -130,7 +131,13 @@ export const EditArticle = (): JSX.Element => {
 						</Button>
 					</label>
 					{imageId && (
-						<Button color="error" onClick={() => setImageId("")}>
+						<Button
+							color="error"
+							onClick={() => {
+								deleteImageMutate(imageId);
+								setImageId("");
+							}}
+						>
 							Delete
 						</Button>
 					)}

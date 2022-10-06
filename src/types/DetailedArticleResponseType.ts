@@ -2,7 +2,7 @@ export type Comments = {
 	articleId: string;
 	author: string;
 	content: string;
-	postedAt: string;
+	createdAt: string;
 	score: number;
 	commentId: string;
 };
