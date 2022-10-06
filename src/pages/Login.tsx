@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { showNotification } from "../actions/notificationActions";
 import { NotificationVariantEnum } from "../model/NotificationVariantEnum";
 import { NotificationBehaviourEnum } from "../model/NotificationBehaviourEnum";
+import { ContainerLoading } from "../components/loading/LoadingComponent";
+import { AxiosError } from "axios";
+import { LoginResponseType } from "../types/LoginResponseType";
 
 const Styled = {
 	LoginPageContainer: styled("div")({
@@ -22,12 +25,11 @@ const Styled = {
 
 export const Login = (): JSX.Element => {
 	const navigate = useNavigate();
-	const { mutate } = useMutation(ApiRequests.authorize, {
+	const { mutate, isLoading } = useMutation(ApiRequests.authorize, {
 		onSuccess: () => {
 			navigate("/myArticles");
 		},
-		onError: (error) => {
-			console.log(error);
+		onError: () => {
 			showNotification(NotificationVariantEnum.ERROR, "Unable to log in", NotificationBehaviourEnum.HIDE_AUTO);
 		},
 	});
@@ -47,44 +49,46 @@ export const Login = (): JSX.Element => {
 		});
 	};
 	return (
-		<Styled.LoginPageContainer>
-			<Typography variant="h3">Log In</Typography>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<TextField
-					label="Email"
-					variant="outlined"
-					autoFocus
-					fullWidth
-					type="text"
-					placeholder="me@example.com"
-					{...register("username", {
-						required: "Email is required",
-					})}
-					error={Boolean(errors.username)}
-					helperText={errors.username?.message}
-					id="email"
-					sx={{ marginBottom: "2rem" }}
-				/>
-				<TextField
-					label="Password"
-					variant="outlined"
-					fullWidth
-					type="password"
-					{...register("password", {
-						required: "Email is required",
-					})}
-					error={Boolean(errors.password)}
-					helperText={errors.password?.message}
-					id="password"
-					sx={{ marginBottom: "2rem" }}
-				/>
-				<div style={{ display: "flex" }}>
-					<Spacer />
-					<Button variant="contained" type="submit">
-						Log In
-					</Button>
-				</div>
-			</form>
-		</Styled.LoginPageContainer>
+		<ContainerLoading loading={isLoading}>
+			<Styled.LoginPageContainer>
+				<Typography variant="h3">Log In</Typography>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<TextField
+						label="Email"
+						variant="outlined"
+						autoFocus
+						fullWidth
+						type="text"
+						placeholder="me@example.com"
+						{...register("username", {
+							required: "Email is required",
+						})}
+						error={Boolean(errors.username)}
+						helperText={errors.username?.message}
+						id="email"
+						sx={{ marginBottom: "2rem" }}
+					/>
+					<TextField
+						label="Password"
+						variant="outlined"
+						fullWidth
+						type="password"
+						{...register("password", {
+							required: "Email is required",
+						})}
+						error={Boolean(errors.password)}
+						helperText={errors.password?.message}
+						id="password"
+						sx={{ marginBottom: "2rem" }}
+					/>
+					<div style={{ display: "flex" }}>
+						<Spacer />
+						<Button variant="contained" type="submit">
+							Log In
+						</Button>
+					</div>
+				</form>
+			</Styled.LoginPageContainer>
+		</ContainerLoading>
 	);
 };

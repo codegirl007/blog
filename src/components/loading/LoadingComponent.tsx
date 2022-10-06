@@ -9,19 +9,19 @@ const Styled = {
 		display: "flex",
 		alignItems: "center",
 		flexDirection: "column",
-		position: "relative",
-		filter: "blur(0.3rem)",
-		pointerEvents: "none",
+		padding: 0,
 	}),
 	IconWrapper: styled("div")({
 		position: "absolute",
+		zIndex: 999,
 		top: "50%",
-		left: "50%",
+		right: "50%",
 		transform: "translate(-50%,-50%)",
 	}),
 	BlurringContainer: styled("div")({
 		filter: "blur(0.3rem)",
 		pointerEvents: "none",
+		width: "100%",
 	}),
 };
 
@@ -34,10 +34,10 @@ export const ContainerLoading = (props: Props): ReactElement => {
 	if (props.loading) {
 		return (
 			<Styled.Wrapper>
-				<Styled.BlurringContainer>{props.children}</Styled.BlurringContainer>
 				<Styled.IconWrapper>
 					<CircularProgress />
 				</Styled.IconWrapper>
+				<Styled.BlurringContainer>{props.children}</Styled.BlurringContainer>
 			</Styled.Wrapper>
 		);
 	}

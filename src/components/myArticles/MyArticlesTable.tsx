@@ -5,18 +5,15 @@ import { ApiRequests } from "../../utils/ApiRequestsClass";
 import { ArticleListResponseType } from "../../types/ArticleListResponseType";
 import { MyArticlesTableRow } from "./MyArticlesTableRow";
 import TableBody from "@mui/material/TableBody";
+import { ContainerLoading } from "../loading/LoadingComponent";
 
 export const MyArticlesTable = (): JSX.Element => {
-	const { data, isFetching } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles, {
+	const { data, isFetching, isLoading } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles, {
 		refetchOnWindowFocus: false,
 	});
 
-	if (isFetching) {
-		return <div>Loading...</div>;
-	}
-
 	return (
-		<>
+		<ContainerLoading loading={isLoading || isFetching}>
 			<Table>
 				<TableHead>
 					<TableRow>
@@ -33,6 +30,6 @@ export const MyArticlesTable = (): JSX.Element => {
 					))}
 				</TableBody>
 			</Table>
-		</>
+		</ContainerLoading>
 	);
 };

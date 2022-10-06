@@ -15,6 +15,7 @@ const Styled = {
 		height: "100vh",
 		overflowY: "scroll",
 		padding: "12rem 22.5rem",
+		position: "relative",
 	}),
 };
 

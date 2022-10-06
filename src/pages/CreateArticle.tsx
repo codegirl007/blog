@@ -14,6 +14,8 @@ import { ArticleImage } from "../components/articleImage/ArticleImage";
 import { NotificationBehaviourEnum } from "../model/NotificationBehaviourEnum";
 import { NotificationVariantEnum } from "../model/NotificationVariantEnum";
 import { showNotification } from "../actions/notificationActions";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { ContainerLoading } from "../components/loading/LoadingComponent";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({
@@ -31,7 +33,7 @@ export const Styled = {
 export const CreateArticle = (): JSX.Element => {
 	const [markdownVal, setMarkdownVal] = useState("");
 	const [imageId, setImageId] = useState("");
-	const { mutate: createArticleMutate } = useMutation("createArticle", ApiRequests.createNewArticle, {
+	const { mutate: createArticleMutate, isLoading } = useMutation("createArticle", ApiRequests.createNewArticle, {
 		onSuccess: () => {
 			showNotification(
 				NotificationVariantEnum.SUCCESS,
@@ -43,7 +45,11 @@ export const CreateArticle = (): JSX.Element => {
 			showNotification(NotificationVariantEnum.ERROR, "Unable to publish article!", NotificationBehaviourEnum.HIDE_AUTO);
 		},
 	});
-	const { data: imageIdData, mutate: uploadImageMutate } = useMutation("uploadImage", ApiRequests.uploadImage, {
+	const {
+		data: imageIdData,
+		mutate: uploadImageMutate,
+		isLoading: isImageLoading,
+	} = useMutation("uploadImage", ApiRequests.uploadImage, {
 		onSuccess: (data) => {
 			data[0].imageId && setImageId(data[0].imageId);
 			showNotification(
@@ -101,64 +107,71 @@ export const CreateArticle = (): JSX.Element => {
 	};
 
 	return (
-		<Styled.ArticlesContainer>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<HBox sx={{ marginBottom: "4rem" }}>
-					<Typography variant="h1">Create new article</Typography>
-					<Button variant="contained" type="submit">
-						Publish Article
-					</Button>
-				</HBox>
-				<TextField
-					label="Article Title"
-					variant="outlined"
-					autoFocus
-					fullWidth
-					type="text"
-					placeholder="My First Article"
-					{...register("title", {
-						required: "Title is required",
-					})}
-					error={Boolean(errors.title)}
-					helperText={errors.title?.message}
-					id="title"
-					sx={{ marginBottom: "2rem" }}
-				/>
-				<Typography variant="h5">Featured image</Typography>
-				{imageId && (
-					<Styled.ImageContainer>
-						<ArticleImage imageId={imageId} />
-					</Styled.ImageContainer>
-				)}
-				<HBox sx={{ marginBottom: "2rem" }}>
-					<input
-						accept="image/*"
-						style={{ display: "none" }}
-						id="button-file"
-						multiple
-						type="file"
-						onChange={onImageUploadChange}
+		<ContainerLoading loading={isLoading}>
+			<Styled.ArticlesContainer>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<HBox sx={{ marginBottom: "4rem" }}>
+						<Typography variant="h1">Create new article</Typography>
+						<Button variant="contained" type="submit">
+							Publish Article
+						</Button>
+					</HBox>
+					<TextField
+						label="Article Title"
+						variant="outlined"
+						autoFocus
+						fullWidth
+						type="text"
+						placeholder="My First Article"
+						{...register("title", {
+							required: "Title is required",
+						})}
+						error={Boolean(errors.title)}
+						helperText={errors.title?.message}
+						id="title"
+						sx={{ marginBottom: "2rem" }}
 					/>
-					<label htmlFor="button-file">
-						<Button variant={imageId ? "text" : "contained"} component="span" color={imageId ? "primary" : "secondary"}>
-							{imageId ? "Upload New" : "Upload an Image"}
-						</Button>
-					</label>
+					<Typography variant="h5">Featured image</Typography>
 					{imageId && (
-						<Button
-							color="error"
-							onClick={() => {
-								deleteImageMutate(imageId);
-								setImageId("");
-							}}
-						>
-							Delete
-						</Button>
+						<Styled.ImageContainer>
+							<ArticleImage imageId={imageId} />
+						</Styled.ImageContainer>
 					)}
-				</HBox>
-				<Typography variant="h5">Content</Typography>
-				<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} />
-			</form>
-		</Styled.ArticlesContainer>
+					<HBox sx={{ marginBottom: "2rem" }}>
+						<input
+							accept="image/*"
+							style={{ display: "none" }}
+							id="button-file"
+							multiple
+							type="file"
+							onChange={onImageUploadChange}
+						/>
+						<label htmlFor="button-file">
+							<LoadingButton
+								loading={isImageLoading}
+								variant={imageId ? "text" : "contained"}
+								component="span"
+								color={imageId ? "primary" : "secondary"}
+							>
+								{imageId ? "Upload New" : "Upload an Image"}
+							</LoadingButton>
+						</label>
+						{imageId && (
+							<Button
+								color="error"
+								onClick={() => {
+									deleteImageMutate(imageId);
+									setImageId("");
+								}}
+							>
+								Delete
+							</Button>
+						)}
+					</HBox>
+					<Typography variant="h5">Content</Typography>
+					<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} />
+				</form>
+			</Styled.ArticlesContainer>
+		</ContainerLoading>
 	);
 };

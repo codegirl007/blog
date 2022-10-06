@@ -10,7 +10,6 @@ export const baseline: ThemeOptions["components"] = {
 			},
 			body: {
 				fontSize: "1.6rem",
-				position: "relative",
 				margin: 0,
 				backgroundColor: themeColors.basic.white,
 			},

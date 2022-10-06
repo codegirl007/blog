@@ -13,6 +13,8 @@ import { RelatedArticle } from "../components/relatedArticle/RelatedArticle";
 import { ArticleImage } from "../components/articleImage/ArticleImage";
 import { CreateCommentInput } from "../components/comments/CreateCommentInput ";
 import { CommentsList } from "../components/comments/CommentsList";
+import { Container } from "@mui/system";
+import { ContainerLoading } from "../components/loading/LoadingComponent";
 
 export const Styled = {
 	DetailedArticleContainer: styled("div")({
@@ -63,36 +65,34 @@ export const DetailedArticle = (): JSX.Element => {
 	} = useQuery<DetailedArticleResponseType, Error>(["detailedArticle", articleId], () => ApiRequests.getDetailedArticle(articleId));
 	const { data: articlesData } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles);
 
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
 	if (error) {
 		return <p>{error.message}</p>;
 	}
 
 	return (
-		<HBox sx={{ alignItems: "start", justifyContent: "space-between" }}>
-			<Styled.DetailedArticleContainer>
-				<Styled.Typography variant="h1">{detailedArticleData?.title}</Styled.Typography>
-				{detailedArticleData && <Styled.ArticleCreationInfo article={detailedArticleData} />}
-				<Styled.DetailedArticleImage>
-					{detailedArticleData?.imageId && <ArticleImage imageId={detailedArticleData?.imageId} />}
-				</Styled.DetailedArticleImage>
-				<Typography variant="body1" sx={{ margin: "2.4rem 0" }}>
-					{detailedArticleData?.content}
-				</Typography>
-				<Styled.HorizontalLine />
-				<CreateCommentInput articleId={articleId} commentsNumber={detailedArticleData?.comments.length} />
-				{detailedArticleData && <CommentsList comments={detailedArticleData.comments} />}
-			</Styled.DetailedArticleContainer>
+		<ContainerLoading loading={isLoading}>
+			<HBox sx={{ alignItems: "start", justifyContent: "space-between" }}>
+				<Styled.DetailedArticleContainer>
+					<Styled.Typography variant="h1">{detailedArticleData?.title}</Styled.Typography>
+					{detailedArticleData && <Styled.ArticleCreationInfo article={detailedArticleData} />}
+					<Styled.DetailedArticleImage>
+						{detailedArticleData?.imageId && <ArticleImage imageId={detailedArticleData?.imageId} />}
+					</Styled.DetailedArticleImage>
+					<Typography variant="body1" sx={{ margin: "2.4rem 0" }}>
+						{detailedArticleData?.content}
+					</Typography>
+					<Styled.HorizontalLine />
+					<CreateCommentInput articleId={articleId} commentsNumber={detailedArticleData?.comments.length} />
+					{detailedArticleData && <CommentsList comments={detailedArticleData.comments} />}
+				</Styled.DetailedArticleContainer>
 
-			<Styled.AsideContainer>
-				<Typography variant="h4">Related Articles</Typography>
-				{articlesData?.items.map((article) => (
-					<RelatedArticle key={article.articleId} title={article.title} perex={article.perex} articleId={article.articleId} />
-				))}
-			</Styled.AsideContainer>
-		</HBox>
+				<Styled.AsideContainer>
+					<Typography variant="h4">Related Articles</Typography>
+					{articlesData?.items.map((article) => (
+						<RelatedArticle key={article.articleId} title={article.title} perex={article.perex} articleId={article.articleId} />
+					))}
+				</Styled.AsideContainer>
+			</HBox>
+		</ContainerLoading>
 	);
 };
