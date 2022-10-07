@@ -31,7 +31,11 @@ export const Login = (): JSX.Element => {
 		},
 		onError: (error: AxiosError) => {
 			const errorResponse = error.response as AxiosResponse;
-			showNotification(NotificationVariantEnum.ERROR, `${errorResponse.data.message}!`, NotificationBehaviourEnum.HIDE_AUTO);
+			showNotification(
+				NotificationVariantEnum.ERROR,
+				`${errorResponse.data ? errorResponse.data.message : error.message}!`,
+				NotificationBehaviourEnum.HIDE_AUTO
+			);
 		},
 	});
 
