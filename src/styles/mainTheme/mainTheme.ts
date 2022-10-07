@@ -1,6 +1,7 @@
 import { createTheme } from "@mui/material";
 import { baseline } from "./muiComponents/baseline";
 import { button } from "./muiComponents/button";
+import { dataGrid } from "./muiComponents/datagrid";
 import { snackbar } from "./muiComponents/snackbar";
 import { table } from "./muiComponents/table";
 import { textInput } from "./muiComponents/textInput";
@@ -17,5 +18,6 @@ export const mainTheme = createTheme({
 		...button,
 		...table,
 		...snackbar,
+		...dataGrid,
 	},
 });

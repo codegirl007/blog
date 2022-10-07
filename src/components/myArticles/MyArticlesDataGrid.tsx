@@ -45,25 +45,25 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 
 	const columns: GridColDef[] = [
 		{ field: "articleId", headerName: "ArticleId", flex: 1 },
-		{ field: "title", headerName: "Article title", flex: 1 },
-		{ field: "perex", headerName: "Perex", minWidth: 500 },
+		{ field: "title", headerName: "Article title", flex: 1, maxWidth: 190 },
+		{ field: "perex", headerName: "Perex", flex: 1, minWidth: 450 },
 		{
 			field: "author",
 			headerName: "Author",
 			renderCell: () => <>{userName}</>,
 			flex: 1,
-			maxWidth: 100,
+			maxWidth: 1200,
 		},
 		{
 			field: "comments",
 			headerName: "# of comments",
-			type: "number",
 			renderCell: (params: GridRenderCellParams) => {
 				if (params.id !== articleId) {
 					return <RenderCommentsNumber articleId={String(params.id)} />;
 				}
 			},
 			flex: 1,
+			maxWidth: 150,
 		},
 		{
 			field: "actions",
@@ -80,6 +80,7 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 				</>
 			),
 			flex: 1,
+			maxWidth: 100,
 		},
 	];
 
