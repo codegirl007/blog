@@ -3,7 +3,7 @@ import { HBox } from "../styles/customComponents.tsx/HBox";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { MyArticlesTable } from "../components/myArticles/MyArticlesTable";
+import { MyArticlesDataGrid } from "../components/myArticles/MyArticlesDataGrid";
 
 export const MyArticles = (): JSX.Element => {
 	const navigate = useNavigate();
@@ -16,7 +16,7 @@ export const MyArticles = (): JSX.Element => {
 					Create new article
 				</Button>
 			</HBox>
-			<MyArticlesTable />
+			<MyArticlesDataGrid />
 		</>
 	);
 };

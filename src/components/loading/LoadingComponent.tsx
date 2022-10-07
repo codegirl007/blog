@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import { styled } from "@mui/material/styles";
+import { styled, SxProps } from "@mui/material/styles";
 
 const Styled = {
 	Wrapper: styled("div")({
@@ -28,12 +28,13 @@ const Styled = {
 type Props = {
 	children?: ReactNode | undefined;
 	loading?: boolean;
+	sx?: SxProps;
 };
 
 export const ContainerLoading = (props: Props): ReactElement => {
 	if (props.loading) {
 		return (
-			<Styled.Wrapper>
+			<Styled.Wrapper sx={props.sx}>
 				<Styled.IconWrapper>
 					<CircularProgress />
 				</Styled.IconWrapper>

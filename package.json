@@ -10,6 +10,7 @@
     "@mui/lab": "^5.0.0-alpha.102",
     "@mui/material": "^5.10.6",
     "@mui/styles": "^5.10.6",
+    "@mui/x-data-grid": "^5.17.6",
     "@uiw/react-md-editor": "^3.18.1",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
