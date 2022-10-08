@@ -34,6 +34,7 @@ export const CreateArticle = (): JSX.Element => {
 	const [markdownVal, setMarkdownVal] = useState("");
 	const [plainText, setPlainText] = useState("");
 	const [imageId, setImageId] = useState("");
+
 	const { mutate: createArticleMutate, isLoading } = useMutation("createArticle", ApiRequests.createNewArticle, {
 		onSuccess: () => {
 			showNotification(
@@ -43,6 +44,7 @@ export const CreateArticle = (): JSX.Element => {
 			);
 		},
 	});
+
 	const {
 		data: imageIdData,
 		mutate: uploadImageMutate,

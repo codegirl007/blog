@@ -7,12 +7,7 @@ import { LoginType } from "../types/LoginType";
 import { useMutation } from "react-query";
 import { ApiRequests } from "../utils/ApiRequestsClass";
 import { useNavigate } from "react-router-dom";
-import { showNotification } from "../actions/notificationActions";
-import { NotificationVariantEnum } from "../model/NotificationVariantEnum";
-import { NotificationBehaviourEnum } from "../model/NotificationBehaviourEnum";
 import { ContainerLoading } from "../components/loading/LoadingComponent";
-import { AxiosError, AxiosResponse } from "axios";
-import { LoginResponseType } from "../types/LoginResponseType";
 
 const Styled = {
 	LoginPageContainer: styled("div")({
@@ -71,7 +66,7 @@ export const Login = (): JSX.Element => {
 						fullWidth
 						type="password"
 						{...register("password", {
-							required: "Email is required",
+							required: "Password is required",
 						})}
 						error={Boolean(errors.password)}
 						helperText={errors.password?.message}

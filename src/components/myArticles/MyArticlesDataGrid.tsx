@@ -18,12 +18,14 @@ import Stack from "@mui/material/Stack";
 
 export const MyArticlesDataGrid = (): JSX.Element => {
 	const userName = authStore.useStore((state) => state.userName, shallow);
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 	const [articleId, setArticleId] = useState("");
+
 	const { data, isFetching, isLoading } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles, {
 		refetchOnWindowFocus: false,
 	});
-	const navigate = useNavigate();
-	const queryClient = useQueryClient();
+
 	const { mutate } = useMutation("deleteArticle", (id: string) => ApiRequests.deleteArticle(id), {
 		onSuccess: () => {
 			queryClient.invalidateQueries("articles");
@@ -34,6 +36,7 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 			);
 		},
 	});
+
 	const deleteArticle = (id: string) => {
 		if (id) {
 			setArticleId(id);

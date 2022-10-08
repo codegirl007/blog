@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Comments } from "../../types/DetailedArticleResponseType";
 import { styled } from "@mui/material/styles";
 import { Typography, IconButton } from "@mui/material";
 import { HBox } from "../../styles/customComponents.tsx/HBox";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { formatDistanceToNowStrict } from "date-fns";
 import { themeColors } from "../../styles/mainTheme/themeColors";
 import { useMutation, useQueryClient } from "react-query";
 import { ApiRequests } from "../../utils/ApiRequestsClass";
 import { showNotification } from "../../actions/notificationActions";
 import { NotificationVariantEnum } from "../../model/NotificationVariantEnum";
 import { NotificationBehaviourEnum } from "../../model/NotificationBehaviourEnum";
+import { countTimeDistance } from "../../utils/countDateAndDifference";
 
 const Styled = {
 	AuthorTypography: styled(Typography)({
@@ -55,14 +55,6 @@ type Props = {
 
 export const Comment = (props: Props): JSX.Element => {
 	const { comment } = props;
-
-	const countTimeDistance = (date: string) => {
-		const dateFormat = new Date(date);
-		const localeDate = new Date(dateFormat.getTime() - dateFormat.getTimezoneOffset() * 60 * 1000);
-		const timeDistance = formatDistanceToNowStrict(localeDate);
-		return timeDistance;
-	};
-
 	const queryClient = useQueryClient();
 	const { mutate: upVoteCommentMutate } = useMutation("upvoteComment", ApiRequests.upvoteComment, {
 		onSuccess: () => {

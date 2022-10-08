@@ -6,10 +6,6 @@ import { styled } from "@mui/material/styles";
 import _ from "lodash";
 import { ArticleListItem } from "../components/recentArticlesList/ArticleListItem";
 import { ContainerLoading } from "../components/loading/LoadingComponent";
-import { AxiosError, AxiosResponse } from "axios";
-import { showNotification } from "../actions/notificationActions";
-import { NotificationVariantEnum } from "../model/NotificationVariantEnum";
-import { NotificationBehaviourEnum } from "../model/NotificationBehaviourEnum";
 
 export const Styled = {
 	ArticlesContainer: styled("div")({

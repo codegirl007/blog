@@ -3,14 +3,16 @@ import MDEditor from "@uiw/react-md-editor";
 
 type MarkDownEditorProps = {
 	markDownVal: string;
-	setMarkDownVal: any;
-	setPlainText: any;
+	setMarkDownVal: React.Dispatch<React.SetStateAction<string>>;
+	setPlainText: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const MarkDownEditor = (props: MarkDownEditorProps): JSX.Element => {
 	useEffect(() => {
 		const markDownText = document.querySelector(".w-md-editor-preview")?.textContent;
-		props.setPlainText(markDownText);
+		if (markDownText) {
+			props.setPlainText(markDownText);
+		}
 	}, [props.markDownVal]);
 	return (
 		<>

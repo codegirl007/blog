@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import { VBox } from "../../styles/customComponents.tsx/VBox";
 import { styled } from "@mui/material/styles";
-import { unstable_HistoryRouter, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { themeColors } from "../../styles/mainTheme/themeColors";
 
 export const Styled = {

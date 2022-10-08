@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const CreateCommentInput = (props: Props): JSX.Element => {
-	const { data: tenantInfo } = useQuery<TenantInfoType, Error>("tenantInfo", () =>
+	const { data: testingTenantInfo } = useQuery<TenantInfoType, Error>("tenantInfo", () =>
 		ApiRequests.getTenant("e80ef34b-a391-4d56-bbdd-42bc334ff878")
 	);
 	const queryClient = useQueryClient();
@@ -26,10 +26,10 @@ export const CreateCommentInput = (props: Props): JSX.Element => {
 	});
 
 	const onSubmit = (formData: any): void => {
-		if (tenantInfo && props.articleId) {
+		if (testingTenantInfo && props.articleId) {
 			createCommentMutate({
 				articleId: props.articleId,
-				author: tenantInfo?.name,
+				author: testingTenantInfo?.name,
 				content: formData.content,
 			});
 		}

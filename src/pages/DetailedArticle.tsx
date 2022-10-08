@@ -58,26 +58,30 @@ export const Styled = {
 
 export const DetailedArticle = (): JSX.Element => {
 	const { articleId } = useParams<string>();
+
 	const { data: detailedArticleData, isLoading } = useQuery<DetailedArticleResponseType, Error>(["detailedArticle", articleId], () =>
 		ApiRequests.getDetailedArticle(articleId)
 	);
 	const { data: articlesData } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles);
+
 	const filteredArticlesData = articlesData?.items.filter((article) => article.articleId !== articleId);
 
 	return (
 		<ContainerLoading loading={isLoading}>
 			<HBox sx={{ alignItems: "start", justifyContent: "space-between" }}>
-				<Styled.DetailedArticleContainer>
-					<Styled.Typography variant="h1">{detailedArticleData?.title}</Styled.Typography>
-					{detailedArticleData && <Styled.ArticleCreationInfo article={detailedArticleData} />}
-					<Styled.DetailedArticleImage>
-						{detailedArticleData?.imageId && <ArticleImage imageId={detailedArticleData?.imageId} />}
-					</Styled.DetailedArticleImage>
-					<MDEditor.Markdown source={detailedArticleData?.content} linkTarget="_blank" />
-					<Styled.HorizontalLine />
-					<CreateCommentInput articleId={articleId} commentsNumber={detailedArticleData?.comments.length} />
-					{detailedArticleData && <CommentsList comments={detailedArticleData.comments} />}
-				</Styled.DetailedArticleContainer>
+				{detailedArticleData && (
+					<Styled.DetailedArticleContainer>
+						<Styled.Typography variant="h1">{detailedArticleData.title}</Styled.Typography>
+						<Styled.ArticleCreationInfo article={detailedArticleData} />
+						<Styled.DetailedArticleImage>
+							<ArticleImage imageId={detailedArticleData.imageId} />
+						</Styled.DetailedArticleImage>
+						<MDEditor.Markdown source={detailedArticleData.content} linkTarget="_blank" />
+						<Styled.HorizontalLine />
+						<CreateCommentInput articleId={articleId} commentsNumber={detailedArticleData.comments.length} />
+						<CommentsList comments={detailedArticleData.comments} />
+					</Styled.DetailedArticleContainer>
+				)}
 
 				<Styled.AsideContainer>
 					<Typography variant="h4">Related Articles</Typography>
