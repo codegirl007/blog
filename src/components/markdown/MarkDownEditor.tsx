@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
 type MarkDownEditorProps = {
 	markDownVal: string;
 	setMarkDownVal: any;
+	setPlainText: any;
 };
 
 export const MarkDownEditor = (props: MarkDownEditorProps): JSX.Element => {
+	useEffect(() => {
+		const markDownText = document.querySelector(".w-md-editor-preview")?.textContent;
+		props.setPlainText(markDownText);
+	}, [props.markDownVal]);
 	return (
 		<>
 			<MDEditor
@@ -18,6 +23,7 @@ export const MarkDownEditor = (props: MarkDownEditorProps): JSX.Element => {
 					placeholder: "Supports MarkDown. Yay!",
 				}}
 			/>
+			<MDEditor.Markdown source={props.markDownVal} style={{ display: "none" }} />
 		</>
 	);
 };

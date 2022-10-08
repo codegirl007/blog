@@ -34,6 +34,7 @@ export const Styled = {
 export const EditArticle = (): JSX.Element => {
 	const { articleId } = useParams<string>();
 	const [imageId, setImageId] = useState("");
+	const [plainText, setPlainText] = useState("");
 	const { data: detailedArticleData, isLoading: isDataLoading } = useQuery<DetailedArticleResponseType, Error>(
 		"detailedArticle",
 		() => ApiRequests.getDetailedArticle(articleId),
@@ -73,8 +74,9 @@ export const EditArticle = (): JSX.Element => {
 				...formData,
 				articleId: articleId,
 				title: formData.title,
+				perex: plainText,
 				imageId: imageId,
-				content: markdownVal || "",
+				content: markdownVal,
 			});
 			reset();
 			setImageId("");
@@ -161,7 +163,7 @@ export const EditArticle = (): JSX.Element => {
 						)}
 					</HBox>
 					<Typography variant="h5">Content</Typography>
-					<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} />
+					<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} setPlainText={setPlainText} />
 				</form>
 			</Styled.ArticlesContainer>
 		</ContainerLoading>

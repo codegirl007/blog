@@ -14,6 +14,7 @@ import { showNotification } from "../../actions/notificationActions";
 import { NotificationVariantEnum } from "../../model/NotificationVariantEnum";
 import { NotificationBehaviourEnum } from "../../model/NotificationBehaviourEnum";
 import { RenderCommentsNumber } from "./RenderCommentsNumber";
+import Stack from "@mui/material/Stack";
 
 export const MyArticlesDataGrid = (): JSX.Element => {
 	const userName = authStore.useStore((state) => state.userName, shallow);
@@ -43,7 +44,12 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 	const columns: GridColDef[] = [
 		{ field: "articleId", headerName: "ArticleId", flex: 1 },
 		{ field: "title", headerName: "Article title", flex: 1, maxWidth: 190 },
-		{ field: "perex", headerName: "Perex", flex: 1, minWidth: 450 },
+		{
+			field: "perex",
+			headerName: "Perex",
+			flex: 1,
+			minWidth: 450,
+		},
 		{
 			field: "author",
 			headerName: "Author",
@@ -91,6 +97,13 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 					checkboxSelection
 					columnVisibilityModel={{
 						articleId: false,
+					}}
+					components={{
+						NoRowsOverlay: () => (
+							<Stack height="100%" alignItems="center" justifyContent="center">
+								You have no articles to display
+							</Stack>
+						),
 					}}
 					hideFooter
 					autoHeight

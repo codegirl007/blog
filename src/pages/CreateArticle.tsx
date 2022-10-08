@@ -32,6 +32,7 @@ export const Styled = {
 
 export const CreateArticle = (): JSX.Element => {
 	const [markdownVal, setMarkdownVal] = useState("");
+	const [plainText, setPlainText] = useState("");
 	const [imageId, setImageId] = useState("");
 	const { mutate: createArticleMutate, isLoading } = useMutation("createArticle", ApiRequests.createNewArticle, {
 		onSuccess: () => {
@@ -72,13 +73,14 @@ export const CreateArticle = (): JSX.Element => {
 			createArticleMutate({
 				articleId: uniqueId,
 				title: formData.title,
-				perex: markdownVal.substring(0, 500),
+				perex: plainText,
 				imageId: imageIdData[0].imageId,
 				content: markdownVal,
 			});
 			reset();
 			setImageId("");
 			setMarkdownVal("");
+			setPlainText("");
 		} else {
 			showNotification(NotificationVariantEnum.ERROR, "Form is not complete!", NotificationBehaviourEnum.HIDE_AUTO);
 		}
@@ -154,7 +156,7 @@ export const CreateArticle = (): JSX.Element => {
 						)}
 					</HBox>
 					<Typography variant="h5">Content</Typography>
-					<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} />
+					<MarkDownEditor markDownVal={markdownVal} setMarkDownVal={setMarkdownVal} setPlainText={setPlainText} />
 				</form>
 			</Styled.ArticlesContainer>
 		</ContainerLoading>

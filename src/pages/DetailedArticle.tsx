@@ -13,8 +13,8 @@ import { RelatedArticle } from "../components/relatedArticle/RelatedArticle";
 import { ArticleImage } from "../components/articleImage/ArticleImage";
 import { CreateCommentInput } from "../components/comments/CreateCommentInput ";
 import { CommentsList } from "../components/comments/CommentsList";
-import { Container } from "@mui/system";
 import { ContainerLoading } from "../components/loading/LoadingComponent";
+import MDEditor from "@uiw/react-md-editor";
 
 export const Styled = {
 	DetailedArticleContainer: styled("div")({
@@ -74,7 +74,7 @@ export const DetailedArticle = (): JSX.Element => {
 						{detailedArticleData?.imageId && <ArticleImage imageId={detailedArticleData?.imageId} />}
 					</Styled.DetailedArticleImage>
 					<Typography variant="body1" sx={{ margin: "2.4rem 0" }}>
-						{detailedArticleData?.content}
+						<MDEditor.Markdown source={detailedArticleData?.content} linkTarget="_blank" />
 					</Typography>
 					<Styled.HorizontalLine />
 					<CreateCommentInput articleId={articleId} commentsNumber={detailedArticleData?.comments.length} />
