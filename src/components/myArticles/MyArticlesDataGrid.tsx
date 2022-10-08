@@ -32,9 +32,6 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 				NotificationBehaviourEnum.HIDE_AUTO
 			);
 		},
-		onError: () => {
-			showNotification(NotificationVariantEnum.ERROR, "Unable to delete article!", NotificationBehaviourEnum.HIDE_AUTO);
-		},
 	});
 	const deleteArticle = (id: string) => {
 		if (id) {

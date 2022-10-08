@@ -56,9 +56,6 @@ export const EditArticle = (): JSX.Element => {
 				NotificationBehaviourEnum.HIDE_AUTO
 			);
 		},
-		onError: () => {
-			showNotification(NotificationVariantEnum.ERROR, "Unable to delete image!");
-		},
 	});
 	const { mutate: deleteImageMutate } = useMutation("deleteImage", (id: string) => ApiRequests.deleteImageData(id), {
 		onSuccess: () => {
@@ -67,9 +64,6 @@ export const EditArticle = (): JSX.Element => {
 				"Your Image has been successfully deleted!",
 				NotificationBehaviourEnum.HIDE_AUTO
 			);
-		},
-		onError: () => {
-			showNotification(NotificationVariantEnum.ERROR, "Unable to delete image!", NotificationBehaviourEnum.HIDE_AUTO);
 		},
 	});
 

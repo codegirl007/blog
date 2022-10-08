@@ -18,16 +18,7 @@ export const Styled = {
 };
 
 export const RecentArticles = (): JSX.Element => {
-	const { data, isLoading, error } = useQuery("articles", ApiRequests.getArticles, {
-		onError: (error: AxiosError) => {
-			const errorResponse = error.response as AxiosResponse;
-			showNotification(
-				NotificationVariantEnum.ERROR,
-				`${errorResponse.data ? errorResponse.data.message : error.message}!`,
-				NotificationBehaviourEnum.HIDE_AUTO
-			);
-		},
-	});
+	const { data, isLoading } = useQuery("articles", ApiRequests.getArticles);
 
 	const sortedArticles = _.orderBy(data?.items, ["createdAt"], ["desc"]);
 

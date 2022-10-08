@@ -1,8 +1,13 @@
 export const dataGrid = {
 	MuiDataGrid: {
 		styleOverrides: {
+			root: {
+				"&:focus, &:focus-within": {
+					outline: "unset",
+				},
+			},
 			columnHeader: {
-				"&:focus": {
+				"&:focus, &:focus-within": {
 					outline: "unset",
 				},
 			},

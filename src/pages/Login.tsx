@@ -29,14 +29,6 @@ export const Login = (): JSX.Element => {
 		onSuccess: () => {
 			navigate("/myArticles");
 		},
-		onError: (error: AxiosError) => {
-			const errorResponse = error.response as AxiosResponse;
-			showNotification(
-				NotificationVariantEnum.ERROR,
-				`${errorResponse.data ? errorResponse.data.message : error.message}!`,
-				NotificationBehaviourEnum.HIDE_AUTO
-			);
-		},
 	});
 
 	const {
