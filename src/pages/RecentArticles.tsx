@@ -20,7 +20,7 @@ export const Styled = {
 export const RecentArticles = (): JSX.Element => {
 	const { data, isLoading } = useQuery("articles", ApiRequests.getArticles);
 
-	const sortedArticles = _.orderBy(data?.items, ["createdAt"], ["desc"]);
+	const sortedArticles = _.orderBy(data?.items, ["lastUpdatedAt"], ["desc"]);
 
 	return (
 		<>

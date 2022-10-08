@@ -25,6 +25,7 @@ const Styled = {
 		margin: "0.8rem 0",
 	}),
 	VoteContainer: styled(IconButton)({
+		color: themeColors.basic.body,
 		width: "4rem",
 		position: "relative",
 		height: "2.4rem",
@@ -54,7 +55,14 @@ type Props = {
 
 export const Comment = (props: Props): JSX.Element => {
 	const { comment } = props;
-	const timeDistance = formatDistanceToNowStrict(new Date(comment.createdAt));
+
+	const countTimeDistance = (date: string) => {
+		const dateFormat = new Date(date);
+		const localeDate = new Date(dateFormat.getTime() - dateFormat.getTimezoneOffset() * 60 * 1000);
+		const timeDistance = formatDistanceToNowStrict(localeDate);
+		return timeDistance;
+	};
+
 	const queryClient = useQueryClient();
 	const { mutate: upVoteCommentMutate } = useMutation("upvoteComment", ApiRequests.upvoteComment, {
 		onSuccess: () => {
@@ -90,12 +98,12 @@ export const Comment = (props: Props): JSX.Element => {
 			<HBox sx={{ alignItems: "baseline" }}>
 				<Styled.AuthorTypography variant="h6">{comment.author}</Styled.AuthorTypography>
 				<Typography variant="body2" color="secondary">
-					{timeDistance} ago
+					{countTimeDistance(comment.createdAt)} ago
 				</Typography>
 			</HBox>
 			<Styled.ContentContainer>{comment.content}</Styled.ContentContainer>
 			<HBox>
-				<Styled.VoteContainer disabled>
+				<Styled.VoteContainer>
 					<Typography variant="body2">{comment.score}</Typography>
 				</Styled.VoteContainer>
 				<Styled.VoteContainer onClick={() => onUpVoteComments(comment.commentId)}>

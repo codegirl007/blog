@@ -73,9 +73,7 @@ export const DetailedArticle = (): JSX.Element => {
 					<Styled.DetailedArticleImage>
 						{detailedArticleData?.imageId && <ArticleImage imageId={detailedArticleData?.imageId} />}
 					</Styled.DetailedArticleImage>
-					<Typography variant="body1" sx={{ margin: "2.4rem 0" }}>
-						<MDEditor.Markdown source={detailedArticleData?.content} linkTarget="_blank" />
-					</Typography>
+					<MDEditor.Markdown source={detailedArticleData?.content} linkTarget="_blank" />
 					<Styled.HorizontalLine />
 					<CreateCommentInput articleId={articleId} commentsNumber={detailedArticleData?.comments.length} />
 					{detailedArticleData && <CommentsList comments={detailedArticleData.comments} />}
