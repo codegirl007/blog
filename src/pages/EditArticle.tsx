@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { ApiRequests } from "../utils/ApiRequestsClass";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { NewArticleType } from "../types/NewArticleType";
 import { styled } from "@mui/material/styles";
@@ -57,15 +57,6 @@ export const EditArticle = (): JSX.Element => {
 			);
 		},
 	});
-	const { mutate: deleteImageMutate } = useMutation("deleteImage", (id: string) => ApiRequests.deleteImageData(id), {
-		onSuccess: () => {
-			showNotification(
-				NotificationVariantEnum.SUCCESS,
-				"Your Image has been successfully deleted!",
-				NotificationBehaviourEnum.HIDE_AUTO
-			);
-		},
-	});
 
 	const {
 		register,
@@ -77,7 +68,7 @@ export const EditArticle = (): JSX.Element => {
 	});
 
 	const onSubmit = (formData: NewArticleType): void => {
-		if (articleId) {
+		if (articleId && imageId && markdownVal) {
 			editArticleMutate({
 				...formData,
 				articleId: articleId,
@@ -85,9 +76,11 @@ export const EditArticle = (): JSX.Element => {
 				imageId: imageId,
 				content: markdownVal || "",
 			});
+			reset();
+			setImageId("");
+		} else {
+			showNotification(NotificationVariantEnum.ERROR, "Form is not complete!", NotificationBehaviourEnum.HIDE_AUTO);
 		}
-		reset();
-		setImageId("");
 	};
 
 	const onImageUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,7 +153,6 @@ export const EditArticle = (): JSX.Element => {
 							<Button
 								color="error"
 								onClick={() => {
-									deleteImageMutate(imageId);
 									setImageId("");
 								}}
 							>

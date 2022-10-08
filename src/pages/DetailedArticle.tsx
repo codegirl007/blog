@@ -58,16 +58,11 @@ export const Styled = {
 
 export const DetailedArticle = (): JSX.Element => {
 	const { articleId } = useParams<string>();
-	const {
-		data: detailedArticleData,
-		error,
-		isLoading,
-	} = useQuery<DetailedArticleResponseType, Error>(["detailedArticle", articleId], () => ApiRequests.getDetailedArticle(articleId));
+	const { data: detailedArticleData, isLoading } = useQuery<DetailedArticleResponseType, Error>(["detailedArticle", articleId], () =>
+		ApiRequests.getDetailedArticle(articleId)
+	);
 	const { data: articlesData } = useQuery<ArticleListResponseType, Error>("articles", ApiRequests.getArticles);
-
-	if (error) {
-		return <p>{error.message}</p>;
-	}
+	const filteredArticlesData = articlesData?.items.filter((article) => article.articleId !== articleId);
 
 	return (
 		<ContainerLoading loading={isLoading}>
@@ -88,7 +83,7 @@ export const DetailedArticle = (): JSX.Element => {
 
 				<Styled.AsideContainer>
 					<Typography variant="h4">Related Articles</Typography>
-					{articlesData?.items.map((article) => (
+					{filteredArticlesData?.map((article) => (
 						<RelatedArticle key={article.articleId} title={article.title} perex={article.perex} articleId={article.articleId} />
 					))}
 				</Styled.AsideContainer>

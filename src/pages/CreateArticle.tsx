@@ -56,15 +56,6 @@ export const CreateArticle = (): JSX.Element => {
 			);
 		},
 	});
-	const { mutate: deleteImageMutate } = useMutation("deleteImage", (id: string) => ApiRequests.deleteImageData(id), {
-		onSuccess: () => {
-			showNotification(
-				NotificationVariantEnum.SUCCESS,
-				"Your Image has been successfully deleted!",
-				NotificationBehaviourEnum.HIDE_AUTO
-			);
-		},
-	});
 
 	const {
 		register,
@@ -77,16 +68,20 @@ export const CreateArticle = (): JSX.Element => {
 
 	const onSubmit = (formData: NewArticleType): void => {
 		const uniqueId = uuid();
-		createArticleMutate({
-			articleId: uniqueId,
-			title: formData.title,
-			perex: markdownVal.substring(0, 500),
-			imageId: imageIdData[0].imageId,
-			content: markdownVal,
-		});
-		reset();
-		setImageId("");
-		setMarkdownVal("");
+		if (imageIdData && markdownVal) {
+			createArticleMutate({
+				articleId: uniqueId,
+				title: formData.title,
+				perex: markdownVal.substring(0, 500),
+				imageId: imageIdData[0].imageId,
+				content: markdownVal,
+			});
+			reset();
+			setImageId("");
+			setMarkdownVal("");
+		} else {
+			showNotification(NotificationVariantEnum.ERROR, "Form is not complete!", NotificationBehaviourEnum.HIDE_AUTO);
+		}
 	};
 
 	const onImageUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,7 +146,6 @@ export const CreateArticle = (): JSX.Element => {
 							<Button
 								color="error"
 								onClick={() => {
-									deleteImageMutate(imageId);
 									setImageId("");
 								}}
 							>
