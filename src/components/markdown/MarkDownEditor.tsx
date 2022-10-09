@@ -3,7 +3,7 @@ import MDEditor from "@uiw/react-md-editor";
 
 type MarkDownEditorProps = {
 	markDownVal: string;
-	setMarkDownVal: React.Dispatch<React.SetStateAction<string>>;
+	setMarkDownVal: any;
 	setPlainText: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -18,9 +18,7 @@ export const MarkDownEditor = (props: MarkDownEditorProps): JSX.Element => {
 		<>
 			<MDEditor
 				value={props.markDownVal}
-				onChange={(value?: string) => {
-					value && props.setMarkDownVal(value);
-				}}
+				onChange={props.setMarkDownVal}
 				textareaProps={{
 					placeholder: "Supports MarkDown. Yay!",
 				}}

@@ -46,6 +46,7 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 
 	const columns: GridColDef[] = [
 		{ field: "articleId", headerName: "ArticleId", flex: 1 },
+		{ field: "lastUpdatedAt", headerName: "Last Updated", flex: 1 },
 		{ field: "title", headerName: "Article title", flex: 1, maxWidth: 190 },
 		{
 			field: "perex",
@@ -63,6 +64,7 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 		{
 			field: "comments",
 			headerName: "# of comments",
+
 			renderCell: (params: GridRenderCellParams) => {
 				if (params.id !== articleId) {
 					return <RenderCommentsNumber articleId={String(params.id)} />;
@@ -92,28 +94,36 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 
 	return (
 		<ContainerLoading loading={isLoading || isFetching}>
-			{data && (
-				<DataGrid
-					rows={data.items}
-					columns={columns}
-					getRowId={(row) => row.articleId}
-					checkboxSelection
-					columnVisibilityModel={{
-						articleId: false,
-					}}
-					components={{
-						NoRowsOverlay: () => (
-							<Stack height="100%" alignItems="center" justifyContent="center">
-								You have no articles to display
-							</Stack>
-						),
-					}}
-					hideFooter
-					autoHeight
-					disableColumnMenu
-					sx={{ width: "100%", height: "90%" }}
-				/>
-			)}
+			<>
+				{data && (
+					<DataGrid
+						rows={data.items}
+						columns={columns}
+						getRowId={(row) => row.articleId}
+						checkboxSelection
+						initialState={{
+							sorting: {
+								sortModel: [{ field: "lastUpdatedAt", sort: "desc" }],
+							},
+						}}
+						columnVisibilityModel={{
+							articleId: false,
+							lastUpdatedAt: false,
+						}}
+						components={{
+							NoRowsOverlay: () => (
+								<Stack height="100%" alignItems="center" justifyContent="center">
+									You have no articles to display
+								</Stack>
+							),
+						}}
+						hideFooter
+						autoHeight
+						disableColumnMenu
+						sx={{ width: "100%", height: "90%" }}
+					/>
+				)}
+			</>
 		</ContainerLoading>
 	);
 };

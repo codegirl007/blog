@@ -82,8 +82,6 @@ export const EditArticle = (): JSX.Element => {
 				imageId: imageId,
 				content: markdownVal,
 			});
-			reset();
-			setImageId("");
 		} else {
 			showNotification(NotificationVariantEnum.ERROR, "Form is not complete!", NotificationBehaviourEnum.HIDE_AUTO);
 		}
