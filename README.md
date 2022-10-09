@@ -1,11 +1,12 @@
 # Single-user Blogging Engine based on Applifting API
 
-
-| Created by------------------------------ | Jana Koutníková------------------------------------ |
-| Main Technologies----------------------- | React, Typescript, Material UI--------------------- |
-| State Management for Keeping Credentials | Zustand Persist------------------------------------ |
-| HTTP Requests--------------------------- | Axios and React-query------------------------------ |
-| Helper Libraries------------------------ | React Hook Form, Lodash, Date-fns, Prettier, ESLint |
+|   |   |
+| ------ | ------ |
+| Created by | Jana Koutníková |
+| Main Technologies | React, Typescript, Material UI |
+| State Management for Keeping Credentials | Zustand Persist |
+| HTTP Requests | Axios and React-query |
+| Helper Libraries | React Hook Form, Lodash, Date-fns, Prettier, ESLint |
 
 
 ## Available Scripts
