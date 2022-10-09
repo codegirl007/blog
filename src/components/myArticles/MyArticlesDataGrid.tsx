@@ -64,7 +64,7 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 		{
 			field: "comments",
 			headerName: "# of comments",
-
+			sortable: false,
 			renderCell: (params: GridRenderCellParams) => {
 				if (params.id !== articleId) {
 					return <RenderCommentsNumber articleId={String(params.id)} />;
