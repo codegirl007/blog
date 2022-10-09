@@ -1,53 +1,12 @@
 import { ThemeOptions } from "@mui/material/styles/createTheme";
 import { themeColors } from "../themeColors";
 
-declare module "@mui/material/TextField" {
-	interface TextFieldPropsSizeOverrides {
-		large: true;
-	}
-}
-declare module "@mui/material/InputBase" {
-	interface InputBasePropsSizeOverrides {
-		large: true;
-	}
-}
-
 export const textInput: ThemeOptions["components"] = {
 	MuiInputBase: {
 		defaultProps: { autoComplete: "off" },
-		variants: [
-			{
-				props: { size: "large" },
-				style: {
-					height: "4.2rem",
-					".MuiOutlinedInput-input, .MuiSelect-input": {
-						fontSize: "1.5rem",
-					},
-				},
-			},
-			{
-				props: { size: "medium" },
-				style: {
-					height: "3.6rem ",
-					".MuiOutlinedInput-input, .MuiSelect-select": {
-						fontSize: "1.4rem",
-					},
-				},
-			},
-			{
-				props: { size: "small" },
-				style: {
-					height: "3rem ",
-					".MuiOutlinedInput-input, .MuiSelect-select": {
-						fontSize: "1.3rem",
-					},
-				},
-			},
-		],
 		styleOverrides: {
 			root: {
 				width: "100%",
-
 				borderRadius: "0.4rem",
 				height: "3.6rem",
 				".MuiSelect-select": {

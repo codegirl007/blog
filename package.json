@@ -25,7 +25,9 @@
 	"scripts": {
 		"start": "webpack serve --port 3000",
 		"build": "NODE_ENV=production webpack",
-		"test": "jest"
+		"test": "jest",
+		"lint": "eslint \"src/**/*.{ts,tsx}\"",
+		"typecheck": "tsc --noEmit"
 	},
 	"author": "Jana Koutníková",
 	"license": "ISC",

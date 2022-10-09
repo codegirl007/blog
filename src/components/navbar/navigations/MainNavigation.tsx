@@ -1,8 +1,6 @@
 import React from "react";
 import { Logo } from "../Logo";
-import { NavLink } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { themeColors } from "../../../styles/mainTheme/themeColors";
 import { CustomNavLink } from "../../../styles/customComponents.tsx/CustomNavLink";
 
 export const Styled = {

@@ -11,7 +11,6 @@ export const showNotification = (
 	behaviour?: NotificationBehaviourEnum
 ): NotificationInfo => {
 	let autoHideDuration: number | null;
-	let closeButton: boolean;
 	if (!behaviour) {
 		behaviour = NotificationBehaviourEnum.HIDE_AUTO;
 	}
@@ -19,14 +18,11 @@ export const showNotification = (
 	switch (behaviour) {
 		case NotificationBehaviourEnum.HIDE_BY_USER:
 			autoHideDuration = null;
-			closeButton = true;
 			break;
 		case NotificationBehaviourEnum.HIDE_AUTO:
 			autoHideDuration = AUTO_HIDE_DURATION_DEFAULT;
-			closeButton = false;
 			break;
 		case NotificationBehaviourEnum.HIDE_NEVER:
-			closeButton = false;
 			autoHideDuration = null;
 			break;
 	}
