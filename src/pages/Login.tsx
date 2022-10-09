@@ -15,6 +15,7 @@ const Styled = {
 		boxShadow: "0rem 1.6rem 4.8rem rgba(0, 0, 0, 0.175)",
 		margin: "0 auto",
 		padding: "3.2rem",
+		borderRadius: "0.8rem",
 	}),
 };
 

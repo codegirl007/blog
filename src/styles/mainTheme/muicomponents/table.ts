@@ -27,9 +27,7 @@ export const table: ThemeOptions["components"] = {
 			root: {
 				padding: "0 1.5rem",
 				height: "2rem",
-				"&:first-letter": {
-					textTransform: "uppercase",
-				},
+				borderBottom: "none",
 			},
 		},
 	},

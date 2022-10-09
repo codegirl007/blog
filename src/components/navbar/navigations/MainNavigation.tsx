@@ -11,17 +11,6 @@ export const Styled = {
 		display: "flex",
 		alignItems: "center",
 	}),
-	NavLink: styled(NavLink)({
-		textDecoration: "none",
-		height: "5.6rem",
-		display: "flex",
-		alignItems: "center",
-		padding: "0 2rem",
-		color: themeColors.basic.body,
-		"&:hover": {
-			backgroundColor: themeColors.greys.borderLight,
-		},
-	}),
 };
 
 export const MainNavigation = (): JSX.Element => {

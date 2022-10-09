@@ -10,6 +10,10 @@ type Props = {
 	commentsNumber: number | undefined;
 };
 
+type FormValues = {
+	content: string;
+};
+
 export const CreateCommentInput = (props: Props): JSX.Element => {
 	const { data: testingTenantInfo } = useQuery<TenantInfoType, Error>("tenantInfo", () =>
 		ApiRequests.getTenant("e80ef34b-a391-4d56-bbdd-42bc334ff878")
@@ -21,11 +25,11 @@ export const CreateCommentInput = (props: Props): JSX.Element => {
 		},
 	});
 
-	const { register, handleSubmit, reset } = useForm({
+	const { register, handleSubmit, reset } = useForm<FormValues>({
 		mode: "onBlur",
 	});
 
-	const onSubmit = (formData: any): void => {
+	const onSubmit = (formData: FormValues): void => {
 		if (testingTenantInfo && props.articleId) {
 			createCommentMutate({
 				articleId: props.articleId,

@@ -14,6 +14,9 @@ export const Styled = {
 		"&:hover": {
 			backgroundColor: themeColors.greys.borderLight,
 		},
+		"&:focus, &:active": {
+			color: themeColors.primary.primaryBlue,
+		},
 	}),
 };
 

@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import shallow from "zustand/shallow";
-
 import { styled } from "@mui/material/styles";
 import { notificationStore } from "../../stores/notificationStore";
 import { Notification } from "./Notification";

@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { ApiRequests } from "../utils/ApiRequestsClass";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useForm } from "react-hook-form";
 import { NewArticleType } from "../types/NewArticleType";
 import { styled } from "@mui/material/styles";
@@ -33,8 +33,11 @@ export const Styled = {
 
 export const EditArticle = (): JSX.Element => {
 	const { articleId } = useParams<string>();
-	const [imageId, setImageId] = useState("");
+
+	const [markdownVal, setMarkdownVal] = useState("");
 	const [plainText, setPlainText] = useState("");
+	const [imageId, setImageId] = useState("");
+
 	const { data: detailedArticleData, isLoading: isDataLoading } = useQuery<DetailedArticleResponseType, Error>(
 		"detailedArticle",
 		() => ApiRequests.getDetailedArticle(articleId),
@@ -44,10 +47,11 @@ export const EditArticle = (): JSX.Element => {
 			},
 		}
 	);
-	const [markdownVal, setMarkdownVal] = useState("");
+
 	const { mutate: editArticleMutate, isLoading: isEditLoading } = useMutation("editArticle", (data: NewArticleType) =>
 		ApiRequests.editArticle(data)
 	);
+
 	const { mutate: uploadImageMutate, isLoading: isImageLoading } = useMutation("uploadImage", ApiRequests.uploadImage, {
 		onSuccess: (data) => {
 			data[0].imageId && setImageId(data[0].imageId);

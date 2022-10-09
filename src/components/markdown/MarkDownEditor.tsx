@@ -18,8 +18,8 @@ export const MarkDownEditor = (props: MarkDownEditorProps): JSX.Element => {
 		<>
 			<MDEditor
 				value={props.markDownVal}
-				onChange={(value: any) => {
-					props.setMarkDownVal(value);
+				onChange={(value?: string) => {
+					value && props.setMarkDownVal(value);
 				}}
 				textareaProps={{
 					placeholder: "Supports MarkDown. Yay!",
