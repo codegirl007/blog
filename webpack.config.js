@@ -2,12 +2,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
+const path = require("path");
 
 module.exports = {
 	mode: "development",
-	entry: "./src/index.tsx",
+	entry: path.resolve(__dirname, "./src/index.tsx"),
 	output: {
-		path: __dirname + "/build/",
+		path: path.resolve(__dirname, "./build"),
+		filename: "bundle.js",
 	},
 	module: {
 		rules: [
