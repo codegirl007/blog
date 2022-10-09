@@ -1,9 +1,4 @@
 import { createTheme } from "@mui/material";
-import { button } from "./muiComponents/button";
-import { dataGrid } from "./muiComponents/datagrid";
-import { snackbar } from "./muiComponents/snackbar";
-import { table } from "./muiComponents/table";
-import { textInput } from "./muiComponents/textInput";
 import { palette } from "./palette";
 import { themeColors } from "./themeColors";
 import { typography } from "./typography";
