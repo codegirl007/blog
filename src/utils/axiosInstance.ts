@@ -22,7 +22,7 @@ axiosInstance.interceptors.response.use(
 		const errorResponse = error.response as AxiosResponse;
 		showNotification(
 			NotificationVariantEnum.ERROR,
-			`${errorResponse.data ? errorResponse.data.message : error.message}!`,
+			`${errorResponse.data.message ? errorResponse.data.message : error.message}!`,
 			NotificationBehaviourEnum.HIDE_AUTO
 		);
 	}
