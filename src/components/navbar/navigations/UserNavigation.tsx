@@ -21,7 +21,9 @@ export const UserNavigation = (): JSX.Element => {
 					</CustomNavLink>
 				</div>
 			) : (
-				<CustomNavLink to="/login">Login</CustomNavLink>
+				<CustomNavLink to="/login" id="login">
+					Login
+				</CustomNavLink>
 			)}
 		</>
 	);
