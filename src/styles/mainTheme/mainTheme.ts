@@ -30,9 +30,8 @@ export const mainTheme = createTheme({
 					width: "100%",
 					borderRadius: "0.4rem",
 					height: "3.6rem",
-					".MuiSelect-select": {
-						fontSize: "1.4rem",
-						padding: "0 1.4rem",
+					"input:-webkit-autofill, input:-webkit-autofill:focus": {
+						transition: "background-color 600000s 0s, color 600000s 0s",
 					},
 				},
 				input: {

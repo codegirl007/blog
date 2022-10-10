@@ -45,7 +45,7 @@ export const Login = (): JSX.Element => {
 		<ContainerLoading loading={isLoading}>
 			<Styled.LoginPageContainer>
 				<Typography variant="h3">Log In</Typography>
-				<form onSubmit={handleSubmit(onSubmit)}>
+				<form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 					<TextField
 						label="Email"
 						variant="outlined"
