@@ -46,6 +46,7 @@ export const mainTheme = createTheme({
 			},
 		},
 		MuiTextField: {
+			defaultProps: { autoComplete: "off" },
 			styleOverrides: {
 				root: {
 					".MuiOutlinedInput-root, .MuiFilledInput-root": {
@@ -55,7 +56,7 @@ export const mainTheme = createTheme({
 			},
 		},
 		MuiOutlinedInput: {
-			defaultProps: { notched: false },
+			defaultProps: { notched: false, autoComplete: "off" },
 			styleOverrides: {
 				root: {
 					backgroundColor: themeColors.basic.white,
