@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import { HBox } from "../styles/customComponents.tsx/HBox";
 import photo from "../images/CVfoto.jpg";
 import { styled } from "@mui/material/styles";
-import { Link, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { Box, Link, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import facebook from "../images/facebook.png";
 import github from "../images/github.png";
 import linkedin from "../images/linkedin.png";
@@ -38,7 +38,9 @@ export const About = (): JSX.Element => {
 		<>
 			<Typography variant="h1">About</Typography>
 			<HBox sx={{ marginTop: "2rem", alignItems: "start" }}>
-				<Styled.Photo src={photo} alt="profilePhoto" />
+				<Box sx={{ background: "none", height: "30rem", borderRadius: "0.8rem" }}>
+					<Styled.Photo src={photo} alt="profilePhoto" loading="eager" />
+				</Box>
 				<Styled.InfoContainer>
 					<Table>
 						<TableBody>
