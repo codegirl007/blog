@@ -118,6 +118,7 @@ export const EditArticle = (): JSX.Element => {
 						autoFocus
 						fullWidth
 						type="text"
+						autoComplete="off"
 						placeholder="My First Article"
 						{...register("title", {
 							required: "Title is required",

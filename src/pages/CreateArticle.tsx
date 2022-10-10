@@ -110,6 +110,7 @@ export const CreateArticle = (): JSX.Element => {
 						label="Article Title"
 						variant="outlined"
 						autoFocus
+						autoComplete="off"
 						fullWidth
 						type="text"
 						placeholder="My First Article"

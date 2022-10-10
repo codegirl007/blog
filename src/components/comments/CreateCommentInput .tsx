@@ -52,6 +52,7 @@ export const CreateCommentInput = (props: Props): JSX.Element => {
 					{...register("content")}
 					id="comment"
 					sx={{ marginBottom: "2rem" }}
+					autoComplete="off"
 				/>
 			</form>
 		</>

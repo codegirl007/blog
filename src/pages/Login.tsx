@@ -50,6 +50,7 @@ export const Login = (): JSX.Element => {
 						label="Email"
 						variant="outlined"
 						autoFocus
+						autoComplete="off"
 						fullWidth
 						type="text"
 						placeholder="me@example.com"
@@ -65,6 +66,7 @@ export const Login = (): JSX.Element => {
 						label="Password"
 						variant="outlined"
 						fullWidth
+						autoComplete="off"
 						type="password"
 						{...register("password", {
 							required: "Password is required",
