@@ -206,6 +206,26 @@ export const mainTheme = createTheme({
 				},
 			},
 		},
+		MuiTooltip: {
+			defaultProps: {
+				placement: "top",
+				arrow: true,
+			},
+			styleOverrides: {
+				tooltip: {
+					backgroundColor: themeColors.primary.primaryBlue,
+					fontSize: "1.4rem",
+					fontWeight: 400,
+					padding: "0.8rem 1.2rem",
+				},
+				arrow: {
+					color: themeColors.primary.primaryBlue,
+					fontSize: "2rem",
+					marginTop: "-1.35rem !important",
+					marginBottom: "-1.35rem !important",
+				},
+			},
+		},
 		MuiDataGrid: {
 			styleOverrides: {
 				root: {

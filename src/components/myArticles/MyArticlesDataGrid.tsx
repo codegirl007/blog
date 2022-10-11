@@ -6,7 +6,7 @@ import { ArticleListResponseType } from "../../types/ArticleListResponseType";
 import { ApiRequests } from "../../utils/ApiRequestsClass";
 import { authStore } from "../../stores/authStore";
 import shallow from "zustand/shallow";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { EditIcon } from "../../styles/icons/EditIcon";
 import { RemoveIcon } from "../../styles/icons/RemoveIcon";
 import { useNavigate } from "react-router-dom";
@@ -79,12 +79,16 @@ export const MyArticlesDataGrid = (): JSX.Element => {
 			sortable: false,
 			renderCell: (params: GridRenderCellParams) => (
 				<>
-					<IconButton onClick={() => navigate(`editArticle/${params.id}`)}>
-						<EditIcon />
-					</IconButton>
-					<IconButton onClick={() => deleteArticle(String(params.id))}>
-						<RemoveIcon />
-					</IconButton>
+					<Tooltip title="Edit">
+						<IconButton onClick={() => navigate(`editArticle/${params.id}`)}>
+							<EditIcon />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title="Delete">
+						<IconButton onClick={() => deleteArticle(String(params.id))}>
+							<RemoveIcon />
+						</IconButton>
+					</Tooltip>
 				</>
 			),
 			flex: 1,
